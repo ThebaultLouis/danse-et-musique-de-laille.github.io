@@ -36,7 +36,7 @@
               class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
             >
               <NuxtLink
-                :to="`/danses/${danse.id.split('/').pop()}`"
+                :to="danse.path"
                 class="hover:text-blue-600 hover:underline"
               >
                 {{ danse.nom }}

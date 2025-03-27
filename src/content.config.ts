@@ -5,12 +5,12 @@ export default defineContentConfig({
   collections: {
     cours: defineCollection({
       type: 'data',
-      source: 'cours/**.yaml',
+      source: 'cours/**.yml',
       schema: CourSchema
     }),
     danses: defineCollection({
-      type: 'data',
-      source: 'danses/**.yaml',
+      type: 'page',
+      source: 'danses/**.yml',
       schema: DanseSchema
     }),
   }

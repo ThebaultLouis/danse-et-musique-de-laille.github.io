@@ -77,13 +77,12 @@
 
 <script lang="ts" setup>
 const route = useRoute();
-const id = route.params.id as string;
-console.log(id);
 console.log(route.path);
-
 const { data: danse } = await useAsyncData(route.path, () =>
   queryCollection("danses").path(route.path).first()
 );
+console.log(danse);
+console.log(danse.value);
 </script>
 
 <style>
