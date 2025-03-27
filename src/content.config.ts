@@ -13,6 +13,11 @@ export default defineContentConfig({
       source: 'danses/**.yml',
       schema: DanseSchema
     }),
+    pages: defineCollection({
+      type: 'page',
+      source: 'pages/**.md',
+      schema: z.object({})
+    })
   }
 })
 
