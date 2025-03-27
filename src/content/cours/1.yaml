@@ -1,6 +1,7 @@
 niveau: INTERMEDIATE
+danses_apprises:
+  - "danses/Noise"
 danses_revisees:
   - "danses/1.2.3. Whiskey"
-danse_apprises:
   - "danses/Noise"
 date_realisation: "2022-03-23"
