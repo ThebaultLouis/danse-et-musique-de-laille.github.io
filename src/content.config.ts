@@ -1,12 +1,12 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
-import { CourSchema, DanseSchema } from './content/schemas'
+import { CoursSchema, DanseSchema } from './content/schemas'
 
 export default defineContentConfig({
   collections: {
     cours: defineCollection({
       type: 'data',
       source: 'cours/**.yml',
-      schema: CourSchema
+      schema: CoursSchema
     }),
     danses: defineCollection({
       type: 'page',

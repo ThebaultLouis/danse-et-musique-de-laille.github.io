@@ -29,17 +29,17 @@
         <tbody class="divide-y divide-gray-200">
           <tr
             v-for="danse in filteredDanses"
-            :key="danse.id"
+            :key="danse.collectionItem.path"
             class="hover:bg-gray-50 transition-colors"
           >
             <td
               class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
             >
               <NuxtLink
-                :to="danse.path"
+                :to="danse.collectionItem.path"
                 class="hover:text-blue-600 hover:underline"
               >
-                {{ danse.nom }}
+                {{ danse.collectionItem.nom }}
               </NuxtLink>
             </td>
           </tr>
@@ -58,17 +58,19 @@
 </template>
 
 <script setup lang="ts">
-import type { Danse } from "~/content/schemas";
+import { DanseCollection } from "~/models";
 
-const { data: danses } = await useAsyncData("danses", () =>
+const { data } = await useAsyncData("danses", () =>
   queryCollection("danses").all()
+);
+
+const danses: DanseCollection = DanseCollection.fromDansesCollectionItems(
+  data.value
 );
 
 const searchQuery = ref("");
 
 const filteredDanses = computed(() => {
-  return danses.value?.filter((danse: Danse) =>
-    danse.nom.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
+  return danses.getBySearchQuery(searchQuery.value);
 });
 </script>
