@@ -1,5 +1,5 @@
 danses_apprises:
-- danses/0.4-wheels
+- danses/4-wheels
 danses_revisees:
 - danses/elizabeth
 - danses/texas-holdem
@@ -7,9 +7,9 @@ danses_revisees:
 - danses/crazy-song
 - danses/train-wreck
 - danses/wannabes
-- danses/mama-&-me
+- danses/mama-and-me
 - danses/soldier
 - danses/fish-in-the-sea
-- danses/woah!-good-things
+- danses/woah-good-things
 date_realisation: '2024-05-22'
 niveau: Novice

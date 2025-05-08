@@ -2,7 +2,7 @@ danses_apprises: []
 danses_revisees:
 - danses/ghost-town
 - danses/codigo
-- danses/0.321
+- danses/321
 - danses/dont-let-her-be-gone
 - danses/dust
 - danses/sangria
@@ -11,6 +11,6 @@ danses_revisees:
 - danses/i-love-dirt-roads
 - danses/people-are-good
 - danses/the-bull
-- danses/#--rednek
+- danses/rednek
 date_realisation: '2021-12-08'
 niveau: Novice

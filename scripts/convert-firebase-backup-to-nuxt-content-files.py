@@ -1,15 +1,25 @@
 import json
 import os
 import yaml
+import re
+
 
 firestore_backup_file_path="/home/thebault/projects/dml-backup/backup.json"
 danses_output_dir = "src/content/danses"
 cours_output_dir = "src/content/cours"
 
 def sanitize_dance_name(name: str) -> str:
-    sanitized_name = name.strip().replace(" ", "-").replace("\"", "").replace("'", "").replace("’", "").lower()
-    if (sanitized_name[0].isdigit()):
-         sanitized_name = "0." + sanitized_name
+    sanitized_name = name
+    sanitized_name = sanitized_name.strip()
+    sanitized_name = sanitized_name.lower()
+    sanitized_name = sanitized_name.replace("&", "and")
+    # Replace multiple spaces with a single space
+    sanitized_name = re.sub(r'\s+', ' ', sanitized_name)
+    # Keep only letters, digits, hyphens, and spaces
+    sanitized_name = re.sub(r'[^A-Za-z0-9\s\-]', '', sanitized_name)
+    sanitized_name = sanitized_name.strip()
+    sanitized_name = sanitized_name.replace(' ', "-")
+    sanitized_name = re.sub(r'-+', '-', sanitized_name)
     return sanitized_name
 
 def generate_dance_yaml_files():
@@ -54,7 +64,7 @@ def generate_cours_yaml_files():
   with open(firestore_backup_file_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 
-  os.makedirs(danses_output_dir, exist_ok=True)
+  os.makedirs(cours_output_dir, exist_ok=True)
 
   # Accès aux données
   dances:dict = data["__collections__"]["dances"]
@@ -74,8 +84,8 @@ def generate_cours_yaml_files():
     learned = [] if learnedDance is None else [learnedDance]
     doneOn = cours.get("doneOn")
 
-    danses_apprises = [f"danses/{dance_name_by_dance_id.get(dance_id)}" for dance_id in learned]
-    danses_revisees = [f"danses/{dance_name_by_dance_id.get(dance_id)}" for dance_id in reviewed]
+    danses_apprises = [f"danses/{dance_name_by_dance_id.get(dance_id)}" for dance_id in learned if dance_id in dance_name_by_dance_id]
+    danses_revisees = [f"danses/{dance_name_by_dance_id.get(dance_id)}" for dance_id in reviewed if dance_id in dance_name_by_dance_id]
 
     yaml_data = {
         "niveau": niveau,

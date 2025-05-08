@@ -8,18 +8,6 @@ export class Danse {
   ) {
     this.collectionItem = collectionItem
   }
-
-  // get path(): string {
-  //   return Danse.danseNameToContentPath(this.nom);
-  // }
-
-  // static contentPathToDanseName(contentPath: string): string {
-  //   return contentPath.replaceAll("danses/", "").replaceAll("-", " ")
-  // }
-
-  // static danseNameToContentPath(danseName: string): string {
-  //   return `danses/${danseName.replaceAll(" ", "-")}`
-  // }
 }
 
 export class DanseCollection {

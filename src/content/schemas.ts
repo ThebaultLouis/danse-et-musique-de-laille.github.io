@@ -11,7 +11,7 @@ export const CoursSchema = z.object({
 
 export const DanseSchema = z.object({
   nom: z.string().min(1, { message: "Le nom de la danse est requis" }),
-  lien_musique: z.string().url().optional(),
-  lien_video_choregraphie: z.string().url().optional(),
-  lien_pdf_choregraphie: z.string().url().optional(),
+  lien_musique: z.string().url().optional().nullable(),
+  lien_video_choregraphie: z.string().url().optional().nullable(),
+  lien_pdf_choregraphie: z.string().url().optional().nullable(),
 });
