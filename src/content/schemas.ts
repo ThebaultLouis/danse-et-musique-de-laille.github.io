@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const NiveauxDesCours = z.enum(['Débutant', 'Intermédiaire', 'Avancé'])
+export const NiveauxDesCours = z.enum(['Débutant', 'Novice', 'Intermédiaire'])
 export const TypesDesCours = z.enum(['Country', 'Catalan'])
 
 export const CoursSchema = z.object({

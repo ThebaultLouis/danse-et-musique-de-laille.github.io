@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-x-auto">
     <table
-      v-if="coursCollection"
+      v-if="cours"
       class="w-full bg-white shadow-md rounded-lg overflow-hidden"
     >
       <thead class="bg-gray-100">
@@ -10,6 +10,11 @@
             class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
           >
             Date
+          </th>
+          <th
+            class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Type
           </th>
           <th
             class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -30,9 +35,9 @@
       </thead>
       <tbody class="divide-y divide-gray-200">
         <PagesCoursTableItem
-          v-for="cours in coursCollection.items"
-          :key="cours.collectionItem.id"
-          :cours="cours"
+          v-for="c in cours"
+          :key="c.collectionItem.id"
+          :cours="c"
         />
       </tbody>
     </table>
@@ -40,9 +45,9 @@
 </template>
 
 <script setup lang="ts">
-import { CoursCollection } from "~/models";
+import { Cours } from "~/models";
 
-const { coursCollection } = defineProps({
-  coursCollection: CoursCollection,
+const { cours } = defineProps({
+  cours: Array<Cours>,
 });
 </script>
