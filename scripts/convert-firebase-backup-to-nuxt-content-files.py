@@ -16,14 +16,14 @@ def generate_dance_yaml_files():
 
   for dance_id, dance_data in list(dances.items()):
       name: str = dance_data.get("name", "")
-      song_link = dance_data.get("songLink", "")
-      video_link = dance_data.get("choreographyVideo", "")
-      pdf_link = dance_data.get("choreographyPdf", "")
+      song_link: str = dance_data.get("songLink", "")
+      video_link: str = dance_data.get("choreographyVideo", "")
+      pdf_link: str = dance_data.get("choreographyPdf", "")
 
       yaml_data = {
           "nom": name,
           "lien_musique": song_link,
-          "lien_video_choregraphie": video_link,
+          "lien_video_choregraphie": video_link if video_link != None and video_link.startswith("http") else None,
           "lien_pdf_choregraphie": pdf_link
       }
 
