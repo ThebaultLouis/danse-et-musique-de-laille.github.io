@@ -1,9 +1,11 @@
 import { z } from 'zod'
 
 export const NiveauxDesCours = z.enum(['Débutant', 'Intermédiaire', 'Avancé'])
+export const TypesDesCours = z.enum(['Country', 'Catalan'])
 
 export const CoursSchema = z.object({
   niveau: NiveauxDesCours,
+  type: TypesDesCours.default("Country"),
   danses_revisees: z.array(z.string()),
   danses_apprises: z.array(z.string()),
   date_realisation: z.date()

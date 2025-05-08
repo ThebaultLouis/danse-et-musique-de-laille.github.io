@@ -1,5 +1,4 @@
 <template>
-  <!-- v-if="danse && danse.collectionItem"  -->
   <div class="container mx-auto px-4 py-8">
     <div class="max-w-4xl mx-auto">
       <h1 class="text-3xl font-bold text-gray-800 mb-6">
@@ -59,7 +58,6 @@
       </div>
     </div>
   </div>
-  <!-- <div v-else>Danse non trouvée</div> -->
 </template>
 
 <script lang="ts" setup>

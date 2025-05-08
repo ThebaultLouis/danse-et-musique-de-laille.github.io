@@ -45,24 +45,9 @@
         >
           <h4 class="text-xl font-semibold mb-2 flex items-center">
             {{ details.niveau }}
-            <div class="relative group ml-2 cursor-pointer">
-              <svg
-                class="w-5 h-5 text-gray-500 hover:text-gray-700"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  d="M9 2a7 7 0 100 14A7 7 0 009 2zM8 9h2v5H8V9zm0-3h2v2H8V6z"
-                />
-              </svg>
-              <div
-                class="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-56 bg-white text-sm text-gray-700 border border-gray-300 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity p-3 z-10"
-              >
-                {{ details.description }}
-              </div>
-            </div>
           </h4>
           <p>{{ details.horaire }}</p>
+          <p class="mt-2 text-sm">{{ details.description }}</p>
         </div>
       </div>
       <div class="text-center mt-6">
@@ -99,25 +84,25 @@ const detailsDesCoursCountry = [
   {
     niveau: "Débutants",
     description:
-      "Ce cours est destiné aux personnes qui découvrent la danse country. Aucun prérequis nécessaire.",
+      "Ce cours s'adresse aux personnes qui veulent découvrir la danse country.Les danses sont simples pour acquérir les bases des pas. Si vous découvrez tout juste la country, ou n'en avez jamais fait, alors il est fait pour vous.",
     horaire: "Mercredi 18h15 - 19h10",
   },
   {
     niveau: "Novice",
     description:
-      "Ce cours est destiné aux personnes qui découvrent la danse country. Aucun prérequis nécessaire.",
+      "Ce cours s’adresse aux personnes qui veulent découvrir de nouvelles chorégraphies tout en travaillant avec des techniques et des rythmes encore plus variés.",
     horaire: "Mercredi 19h15 - 20h25",
   },
   {
     niveau: "Intermédiaire",
     description:
-      "Ce cours est destiné aux personnes qui découvrent la danse country. Aucun prérequis nécessaire.",
+      "Ce cours s’adresse aux personnes qui souhaitent acquérir des chorégraphiques techniques sur des rythmes plus difficiles.",
     horaire: "Mercredi 20h30 – 21h45",
   },
   {
     niveau: "Intermédiaire +",
     description:
-      "Ce cours est destiné aux personnes qui découvrent la danse country. Aucun prérequis nécessaire.",
+      "Ce cours s’adresse aux personnes qui souhaitent acquérir des chorégraphiques techniques sur des rythmes plus difficiles.",
     horaire: "Mercredi 21h15 - 22h00",
   },
 ];
