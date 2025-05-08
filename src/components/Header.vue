@@ -1,16 +1,50 @@
 <template>
   <header class="bg-white shadow-md">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <HeaderNavLink to="/">
-        <div class="text-2xl font-bold text-gray-800">DML Country</div>
-      </HeaderNavLink>
+      <NuxtLink to="/">
+        <div class="text-2xl font-bold text-gray-800">
+          Danse et Musiques de Laille
+        </div>
+      </NuxtLink>
 
       <!-- Navigation Desktop -->
       <nav class="hidden md:flex space-x-6">
-        <HeaderNavLink to="/cours">Cours</HeaderNavLink>
-        <HeaderNavLink to="/danses">Danses</HeaderNavLink>
-        <HeaderNavLink to="/agenda">Agenda</HeaderNavLink>
-        <HeaderNavLink to="/instagram">Instagram</HeaderNavLink>
+        <NuxtLink
+          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          to="/cours"
+        >
+          Cours
+        </NuxtLink>
+        <NuxtLink
+          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          to="/danses"
+        >
+          Danses
+        </NuxtLink>
+        <NuxtLink
+          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          to="/agenda"
+        >
+          Agenda
+        </NuxtLink>
+        <NuxtLink
+          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          to="/photos"
+        >
+          Photos
+        </NuxtLink>
+        <NuxtLink
+          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          to="/a-propos"
+        >
+          À-propos
+        </NuxtLink>
+        <NuxtLink
+          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          to="/contact"
+        >
+          Contact
+        </NuxtLink>
       </nav>
 
       <!-- Menu Mobile -->
@@ -58,18 +92,12 @@
         class="absolute top-16 left-0 w-full bg-white shadow-lg md:hidden"
       >
         <nav class="flex flex-col p-4 space-y-2">
-          <HeaderNavLink to="/cours" @click="toggleMobileMenu"
-            >Cours</HeaderNavLink
-          >
-          <HeaderNavLink to="/danses" @click="toggleMobileMenu"
-            >Danses</HeaderNavLink
-          >
-          <HeaderNavLink to="/agenda" @click="toggleMobileMenu"
-            >Agenda</HeaderNavLink
-          >
-          <HeaderNavLink to="/instagram" @click="toggleMobileMenu"
-            >Instagram</HeaderNavLink
-          >
+          <NuxtLink to="/cours" @click="toggleMobileMenu"> Cours </NuxtLink>
+          <NuxtLink to="/danses" @click="toggleMobileMenu"> Danses </NuxtLink>
+          <NuxtLink to="/agenda" @click="toggleMobileMenu"> Agenda </NuxtLink>
+          <NuxtLink to="/instagram" @click="toggleMobileMenu">
+            Instagram
+          </NuxtLink>
         </nav>
       </div>
     </div>
