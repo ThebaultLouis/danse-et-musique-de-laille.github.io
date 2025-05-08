@@ -27,7 +27,7 @@ def generate_dance_yaml_files():
           "lien_pdf_choregraphie": pdf_link
       }
 
-      sanitized_name = name.replace(" ", "-").replace("\"", "").replace("'", "").lower()
+      sanitized_name = name.replace(" ", "-").replace("\"", "").replace("'", "").replace("’", "").lower()
       if (sanitized_name[0].isdigit()):
          sanitized_name = "0." + sanitized_name
       file_name = f"{sanitized_name}.yml"
