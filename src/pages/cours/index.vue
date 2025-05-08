@@ -12,7 +12,7 @@
 import { CoursCollection } from "~/models";
 
 const { data } = await useAsyncData("cours", () =>
-  queryCollection("cours").all()
+  queryCollection("cours").order("date_realisation", "DESC").all()
 );
 
 const coursCollection: CoursCollection =
