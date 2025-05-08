@@ -70,7 +70,8 @@ def generate_cours_yaml_files():
     print(course_id)
     niveau = niveau_map.get(cours.get("level", ""), cours.get("level"))
     reviewed = cours.get("reviewedDances", [])
-    learned = [cours.get("learnedDance")]
+    learnedDance = cours.get("learnedDance")
+    learned = [] if learnedDance is None else [learnedDance]
     doneOn = cours.get("doneOn")
 
     danses_apprises = [f"danses/{dance_name_by_dance_id.get(dance_id)}" for dance_id in learned]

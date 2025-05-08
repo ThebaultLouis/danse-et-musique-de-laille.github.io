@@ -1,5 +1,4 @@
-danses_apprises:
-- danses/None
+danses_apprises: []
 danses_revisees:
 - danses/dim-the-lights
 - danses/darts-in-the-dark

@@ -1,5 +1,4 @@
-danses_apprises:
-- danses/None
+danses_apprises: []
 danses_revisees:
 - danses/year-of-the-young
 - danses/0.1-2-snap

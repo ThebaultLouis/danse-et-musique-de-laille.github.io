@@ -1,5 +1,4 @@
-danses_apprises:
-- danses/None
+danses_apprises: []
 danses_revisees:
 - danses/memory-lane
 - danses/on-the-road-again
