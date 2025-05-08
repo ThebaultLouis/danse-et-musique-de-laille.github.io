@@ -65,12 +65,10 @@
 import { Danse } from "~/models";
 
 const route = useRoute();
-console.log(route.path);
 const { data } = await useAsyncData(route.path, () =>
   queryCollection("danses").path(route.path).first()
 );
 const danse = new Danse(data.value!);
-console.log(danse);
 </script>
 
 <style>

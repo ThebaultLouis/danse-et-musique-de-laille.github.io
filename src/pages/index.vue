@@ -1,8 +1,8 @@
 <template>
-  <body class="bg-white text-gray-800">
-    <header
+  <div class="bg-white text-gray-800">
+    <div
       class="bg-cover bg-center h-screen text-white"
-      style="background-image: url('/images/home.jpg')"
+      :style="{ backgroundImage: `url(${backgroundImagePath})` }"
     >
       <div
         class="bg-black bg-opacity-40 h-full flex flex-col justify-center items-center text-center px-4"
@@ -28,7 +28,7 @@
           </NuxtLink>
         </div>
       </div>
-    </header>
+    </div>
 
     <!-- Cours Section -->
     <section id="cours" class="py-16 px-4 max-w-6xl mx-auto">
@@ -89,10 +89,12 @@
         </div>
       </div>
     </section>
-  </body>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import backgroundImagePath from "~/static/images/home.jpg";
+
 const detailsDesCoursCountry = [
   {
     niveau: "Débutants",
