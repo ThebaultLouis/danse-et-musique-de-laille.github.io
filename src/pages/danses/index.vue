@@ -15,8 +15,10 @@
     </div>
 
     <!-- Tableau des danses -->
-    <div class="overflow-x-auto">
-      <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="overflow-x-auto flex justify-center">
+      <table
+        class="w-full max-w-lg bg-white shadow-md rounded-lg overflow-hidden"
+      >
         <thead class="bg-gray-100">
           <tr>
             <th
