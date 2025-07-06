@@ -1,5 +1,9 @@
 # https://github.com/actions/deploy-pages#usage
 name: Deploy to GitHub Pages
+env:
+  NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+  NOTION_COURS_DATABASE_ID: ${{ secrets.NOTION_COURS_DATABASE_ID }}
+  NOTION_DANSES_DATABASE_ID: ${{ secrets.NOTION_DANSES_DATABASE_ID }}
 on:
   workflow_dispatch:
   push:
