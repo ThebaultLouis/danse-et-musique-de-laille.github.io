@@ -25,6 +25,13 @@ class FirestoreDance:
         song_link = dance.get("songLink", "")
         video_link = dance.get("choreographyVideo", "")
         pdf_link = dance.get("choreographyPdf", "")
+
+        if song_link != None and len(song_link) == 0:
+            song_link = None
+        if video_link != None and len(video_link) == 0:
+            video_link = None
+        if pdf_link != None and len(pdf_link) == 0:
+            pdf_link = None
         return cls(name, song_link, video_link, pdf_link)
 
     @property
@@ -33,6 +40,8 @@ class FirestoreDance:
 
     @property
     def s3_file_url(self):
+        if self.pdf_link == None:
+            return None
         return f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{urllib.parse.quote(self.s3_key)}"
 
 
