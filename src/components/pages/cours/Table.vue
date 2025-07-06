@@ -34,19 +34,13 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
-        <PagesCoursTableItem
-          v-for="c in cours"
-          :key="c.collectionItem.id"
-          :cours="c"
-        />
+        <PagesCoursTableItem v-for="c in cours" :key="c.id" :cours="c" />
       </tbody>
     </table>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Cours } from "~/models";
-
 const { cours } = defineProps({
   cours: Array<Cours>,
 });

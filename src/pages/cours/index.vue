@@ -25,15 +25,12 @@
       </select>
 
       <select
-        type="date"
         v-model="selectedDate"
         class="select select-bordered w-full max-w-xs px-4 py-2 border rounded-lg"
       >
         <option value="">Tous les jours</option>
         <option
-          v-for="date in new Set(
-            coursCollection.items.map((cours) => cours.dateRealisation)
-          )"
+          v-for="date in new Set(cours.map((cours) => cours.date))"
           :key="date"
           :value="date"
         >
@@ -47,27 +44,19 @@
 </template>
 
 <script setup lang="ts">
-import { CoursCollection } from "~/models";
-
-const { data } = await useAsyncData("cours", () =>
-  queryCollection("cours").order("date_realisation", "DESC").all()
-);
-
-const coursCollection: CoursCollection =
-  CoursCollection.fromCoursCollectionItems(data.value);
+const { cours } = useCours();
 
 const selectedNiveau = ref("");
 const selectedType = ref("");
 const selectedDate = ref("");
 
 const filteredCours = computed(() => {
-  return coursCollection.items.filter(
+  return cours.value.filter(
     (cours) =>
-      (!selectedNiveau.value ||
-        cours.collectionItem.niveau === selectedNiveau.value) &&
-      (!selectedType.value ||
-        cours.collectionItem.type === selectedType.value) &&
-      (!selectedDate.value || cours.dateRealisation === selectedDate.value)
+      !selectedNiveau.value ||
+      (cours.niveau === selectedNiveau.value &&
+        (!selectedType.value || cours.type === selectedType.value) &&
+        (!selectedDate.value || cours.date === selectedDate.value))
   );
 });
 </script>

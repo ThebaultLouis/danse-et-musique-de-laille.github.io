@@ -1,31 +1,35 @@
-import type { DansesCollectionItem, PageCollectionItemBase } from "@nuxt/content";
-
-export class Danse {
-  collectionItem: DansesCollectionItem;
-
-  constructor(
-    collectionItem: DansesCollectionItem,
-  ) {
-    this.collectionItem = collectionItem
-  }
+export type TDanse = {
+  id: string
+  nom: string
+  musiqueUrl: string
+  videoUrl: string
+  pdfUrl: string
 }
 
-export class DanseCollection {
-  items: Danse[];
+export class Danse {
+  constructor(
+    public id: string,
+    public nom: string,
+    public musiqueUrl: string,
+    public videoUrl: string,
+    public pdfUrl: string
+  ) { }
 
-  constructor(items: Danse[]) {
-    this.items = items;
+  get nuxtPath() {
+    return `danses/${this.id}`
   }
 
-  static fromDansesCollectionItems(dansesCollectionItems: DansesCollectionItem[] | null) {
-    return new DanseCollection(dansesCollectionItems?.map((danseCollectionItem: DansesCollectionItem) =>
-      new Danse(danseCollectionItem)
-    ) ?? []);
+  static toPinia(page: any): TDanse {
+    return {
+      id: page.id,
+      nom: page.properties?.Nom?.title?.[0]?.plain_text || '',
+      musiqueUrl: page.properties?.['Lien de la musique']?.url || '',
+      videoUrl: page.properties?.['Lien de la chorégraphie']?.url || '',
+      pdfUrl: page.properties?.['Pdf de la chorégraphie']?.files?.[0]?.file?.url || ''
+    }
   }
 
-  getBySearchQuery(searchQuery: string) {
-    return this.items.filter(danse =>
-      danse.collectionItem.nom.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  static fromPinia(danse: TDanse) {
+    return new Danse(danse.id, danse.nom, danse.musiqueUrl, danse.videoUrl, danse.pdfUrl)
   }
 }

@@ -4,10 +4,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
-    '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/icon',
     '@nuxt/image',
-    '@nuxtjs/tailwindcss'
-  ]
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt'
+  ],
+
+  runtimeConfig: {
+    NOTION_API_KEY: process.env.NOTION_API_KEY,
+    NOTION_DANSES_DATABASE_ID: process.env.NOTION_DANSES_DATABASE_ID,
+    NOTION_COURS_DATABASE_ID: process.env.NOTION_COURS_DATABASE_ID,
+  }
 })

@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4 py-8">
     <div class="max-w-4xl mx-auto">
       <h1 class="text-3xl font-bold text-gray-800 mb-6">
-        {{ danse.collectionItem.nom }}
+        {{ danse.nom }}
       </h1>
 
       <div class="grid md:grid-cols-2 gap-8">
@@ -11,8 +11,8 @@
             <h2 class="text-xl font-semibold mb-4">Musique</h2>
             <div class="bg-gray-100 rounded-lg p-4">
               <a
-                v-if="danse.collectionItem.lien_musique"
-                :href="danse.collectionItem.lien_musique"
+                v-if="danse?.musiqueUrl"
+                :href="danse.musiqueUrl"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-blue-600 hover:underline flex items-center"
@@ -28,8 +28,8 @@
             <h2 class="text-xl font-semibold mb-4">Chorégraphie</h2>
             <div class="space-y-4">
               <a
-                v-if="danse.collectionItem.lien_video_choregraphie"
-                :href="danse.collectionItem.lien_video_choregraphie"
+                v-if="danse?.videoUrl"
+                :href="danse.videoUrl"
                 target="_blank"
                 class="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition"
               >
@@ -41,8 +41,8 @@
               <span v-else class="text-gray-400">Non disponible</span>
 
               <a
-                v-if="danse.collectionItem.lien_pdf_choregraphie"
-                :href="danse.collectionItem.lien_pdf_choregraphie"
+                v-if="danse?.pdfUrl"
+                :href="danse.pdfUrl"
                 target="_blank"
                 class="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition"
               >
@@ -61,16 +61,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Danse } from "~/models";
-
 const route = useRoute();
-const { data, error } = await useAsyncData(route.path, () =>
-  queryCollection("danses").path(route.path).first()
+const { danses } = useDanses();
+const danse = danses.value.find(
+  (danse: { id: any }) => danse.id == route.params.id
 );
-if (error) {
-  console.log(error.value);
-}
-const danse = new Danse(data.value!);
 </script>
 
 <style>

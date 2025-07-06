@@ -1,36 +1,34 @@
-import type { CoursCollectionItem } from "@nuxt/content";
-
-export class Cours {
-  collectionItem: CoursCollectionItem;
-  dateRealisation: String;
-
-  constructor(
-    collectionItem: CoursCollectionItem,
-  ) {
-    this.collectionItem = collectionItem
-    this.dateRealisation = new Date(collectionItem.date_realisation).toLocaleDateString("fr-FR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    })
-  }
-
-  static dancePathToDanceName(dancePath: string): string {
-    var sanitizedDanceName = dancePath.replaceAll("danses/", "").replaceAll("-", " ")
-    return sanitizedDanceName.charAt(0).toUpperCase() + sanitizedDanceName.slice(1);
-  }
+export type TCours = {
+  id: string
+  type: string
+  date: string
+  niveau: string
+  dansesApprises: string[]
+  dansesRevisees: string[]
 }
 
-export class CoursCollection {
-  items: Cours[];
+export class Cours {
+  constructor(
+    public id: string,
+    public type: string,
+    public date: string,
+    public niveau: string,
+    public apprises: string[],
+    public revisees: string[]
+  ) { }
 
-  constructor(items: Cours[]) {
-    this.items = items;
+  static toPinia(page: any): TCours {
+    return {
+      id: page.id,
+      date: page.properties?.Date?.title?.[0]?.plain_text || '',
+      type: page.properties?.Type?.select?.name || '',
+      niveau: page.properties?.Niveau?.select?.name || '',
+      dansesApprises: (page.properties?.['Danses apprises']?.relation || []).map((r: any) => r.id),
+      dansesRevisees: (page.properties?.['Danses révisées']?.relation || []).map((r: any) => r.id)
+    }
   }
 
-  static fromCoursCollectionItems(courssCollectionItems: CoursCollectionItem[] | null) {
-    return new CoursCollection(courssCollectionItems?.map((coursCollectionItem: CoursCollectionItem) =>
-      new Cours(coursCollectionItem)
-    ) ?? []);
+  static fromPinia(cours: TCours) {
+    return new Cours(cours.id, cours.type, cours.date, cours.niveau, cours.dansesApprises, cours.dansesRevisees)
   }
 }
