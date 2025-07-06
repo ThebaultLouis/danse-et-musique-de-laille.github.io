@@ -9,6 +9,8 @@ def import_danse_dabatase_from_firebase_backup():
         notion_client.create_danse(dance)
         print("✅ Added:", dance.name)
         time.sleep(0.4)  # Notion API rate limit: ~3 requests/sec
+        return
+
 
 if __name__ == "__main__":
     import_danse_dabatase_from_firebase_backup()
