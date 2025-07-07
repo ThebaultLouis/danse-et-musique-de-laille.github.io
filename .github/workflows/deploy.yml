@@ -21,8 +21,8 @@ jobs:
       # Pick your own package manager and build script
       - name: Debug env
         run: |
-          echo "$NOTION_COURS_DATABASE_ID
-          echo "$NOTION_DANSES_DATABASE_ID
+          echo $NOTION_COURS_DATABASE_ID
+          echo $NOTION_DANSES_DATABASE_ID
       - run: npm install
         working-directory: ./src
       - run: NUXT_APP_BASE_URL=/danse-et-musique-de-laille.github.io/ npx nuxt build --preset github_pages
