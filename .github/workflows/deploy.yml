@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github_pages
     env:
       NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
       NOTION_COURS_DATABASE_ID: ${{ secrets.NOTION_COURS_DATABASE_ID }}
