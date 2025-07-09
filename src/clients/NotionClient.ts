@@ -1,4 +1,4 @@
-import { Client } from '@notionhq/client'
+import { Client, collectPaginatedAPI } from '@notionhq/client'
 
 export class NotionClient {
   private client: Client
@@ -17,16 +17,32 @@ export class NotionClient {
   }
 
   async fetchDanses() {
-    const res = await this.client.databases.query({
+    const danses = await collectPaginatedAPI(this.client.databases.query, {
       database_id: this.databaseIds.danses,
+      sorts: [
+        {
+          property: "Nom",
+          direction: "ascending",
+        },
+      ],
     })
-    return res.results
+    return danses
   }
 
   async fetchCours() {
-    const res = await this.client.databases.query({
+    const cours = await collectPaginatedAPI(this.client.databases.query, {
       database_id: this.databaseIds.cours,
+      sorts: [
+        {
+          property: "Date",
+          direction: "descending",
+        },
+        {
+          property: "Niveau",
+          direction: "descending",
+        },
+      ],
     })
-    return res.results
+    return cours
   }
 }
