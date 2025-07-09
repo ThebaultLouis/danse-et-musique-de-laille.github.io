@@ -24,10 +24,13 @@
       <ul class="space-y-1">
         <li
           v-for="danse in cours.dansesApprises"
-          :key="danse"
+          :key="danse.id"
           class="text-gray-700"
         >
-          <NuxtLink :to="danse" class="hover:text-blue-600 hover:underline">
+          <NuxtLink
+            :to="danse.nuxtPath"
+            class="hover:text-blue-600 hover:underline"
+          >
             {{ danse }}
           </NuxtLink>
         </li>
@@ -37,10 +40,13 @@
       <ul class="space-y-1">
         <li
           v-for="danse in cours.dansesRevisees"
-          :key="danse"
+          :key="danse.id"
           class="text-gray-700"
         >
-          <NuxtLink :to="danse" class="hover:text-blue-600 hover:underline">
+          <NuxtLink
+            :to="danse.nuxtPath"
+            class="hover:text-blue-600 hover:underline"
+          >
             {{ danse }}
           </NuxtLink>
         </li>
@@ -50,6 +56,9 @@
 </template>
 
 <script setup lang="ts">
+import type { PropType } from "vue";
+import type { Cours } from "~/models/Cours";
+
 const { cours } = defineProps({
   cours: Object as PropType<Cours>,
 });

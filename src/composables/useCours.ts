@@ -2,11 +2,12 @@ import { computed } from 'vue'
 import { Cours } from '~/models/Cours'
 
 export function useCours() {
-  const store = useNotionCoursStore()
+  const notionCoursStore = useNotionCoursStore()
+  const { danses } = useDanses()
 
   const cours = computed(() =>
-    store.cours.map((obj) => Cours.fromPinia(obj))
+    notionCoursStore.cours.map((obj) => Cours.fromPinia(obj, danses.value))
   )
 
-  return { cours, fetchCours: store.fetchCours }
+  return { cours, fetchCours: notionCoursStore.fetchCours }
 }

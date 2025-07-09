@@ -1,3 +1,5 @@
+import type { Danse } from "./Danse"
+
 export type TCours = {
   id: string
   type: string
@@ -13,8 +15,8 @@ export class Cours {
     public type: string,
     public date: string,
     public niveau: string,
-    public apprises: string[],
-    public revisees: string[]
+    public dansesApprises: Danse[],
+    public dansesRevisees: Danse[]
   ) { }
 
   static toPinia(page: any): TCours {
@@ -28,7 +30,10 @@ export class Cours {
     }
   }
 
-  static fromPinia(cours: TCours) {
-    return new Cours(cours.id, cours.type, cours.date, cours.niveau, cours.dansesApprises, cours.dansesRevisees)
+  static fromPinia(cours: TCours, danses: Danse[]) {
+    const danse_id_to_danse = Object.fromEntries(danses.map(danse => [danse.id, danse]))
+    const dansesApprises = cours.dansesApprises.map(d => danse_id_to_danse[d])
+    const dansesRevisees = cours.dansesRevisees.map(d => danse_id_to_danse[d])
+    return new Cours(cours.id, cours.type, cours.date, cours.niveau, dansesApprises, dansesRevisees)
   }
 }
