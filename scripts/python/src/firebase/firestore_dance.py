@@ -17,8 +17,8 @@ class FirestoreDance:
     video_link: str
     pdf_link: str
 
-    @classmethod
-    def from_dict(cls, dance: dict) -> "FirestoreDance":
+    @staticmethod
+    def from_dict(dance: dict) -> "FirestoreDance":
         id = dance.get("id", None)
         name = dance.get("name", None).strip()
         song_link = dance.get("songLink", None)
@@ -31,7 +31,7 @@ class FirestoreDance:
             video_link = None
         if pdf_link != None and len(pdf_link) == 0:
             pdf_link = None
-        return cls(id, name, song_link, video_link, pdf_link)
+        return FirestoreDance(id, name, song_link, video_link, pdf_link)
 
     @property
     def s3_key(self):

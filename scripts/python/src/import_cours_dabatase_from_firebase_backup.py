@@ -1,18 +1,18 @@
 import time
 
 from firebase import firebase_collections
-from notion import notion_client
+from notion import notion_service
 from notion.notion_cours import NotionCours
 
 
 def get_firestore_dance_id_to_notion_danse_id():
     firestore_dances = firebase_collections.firestore_dances()
-    notion_danses = notion_client.danses()
+    notion_danses = notion_service.danses()
     notion_danses_by_nom = {
         notion_danse.nom: notion_danse for notion_danse in notion_danses
     }
     firestore_dance_id_to_notion_danse_id = {
-        firestore_dance.id: notion_danses_by_nom[firestore_dance.name]
+        firestore_dance.id: notion_danses_by_nom[firestore_dance.name].id
         for firestore_dance in firestore_dances
     }
     return firestore_dance_id_to_notion_danse_id
@@ -32,7 +32,7 @@ def import_danse_dabatase_from_firebase_backup():
                 for reviewedDanceId in classe.reviewedDances
             ],
         )
-        notion_client.create_cours(notion_cours)
+        notion_service.create_cours(notion_cours)
         print("✅ Added:", notion_cours.date, notion_cours.niveau)
         time.sleep(0.4)  # Notion API rate limit: ~3 requests/sec
         return

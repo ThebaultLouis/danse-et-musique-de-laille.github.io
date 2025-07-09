@@ -2,7 +2,8 @@ import json
 import os
 from dotenv import load_dotenv
 
-from firestore_dance import FirestoreDance, FirestoreClasse
+from .firestore_dance import FirestoreDance
+from .firestore_classe import FirestoreClasse
 
 load_dotenv()
 

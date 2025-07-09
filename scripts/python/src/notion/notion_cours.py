@@ -41,34 +41,28 @@ class NotionCours:
 
     @staticmethod
     def from_firestore_classe(
-        cls,
         firestore_classe: FirestoreClasse,
         danses_apprises: List[str],
         danses_revisees: List[str],
-        niveau="Country",
+        type="Country",
     ) -> "NotionCours":
-        cls(
+        return NotionCours(
             date=firestore_classe.doneOn,
-            type=FirestoreClasseLevel_NotionCoursNiveau[firestore_classe.level],
-            niveau=niveau,
+            niveau=FirestoreClasseLevel_NotionCoursNiveau[firestore_classe.level],
+            type=type,
             danses_apprises=danses_apprises,
             danses_revisees=danses_revisees,
         )
 
-    @classmethod
     def to_notion_client_create_page_body(cls):
         return {
-            "parent": {"database_id": NOTION_COURS_DATABASE_ID},
-            "properties": {
-                "date": {"title": [{"text": {"content": cls.date}}]},
-                "id": {"rich_text": [{"text": {"content": cls.id}}]},
-                "type": {"select": {"name": cls.type}},
-                "niveau": {"select": {"name": cls.niveau}},
-                "danses_apprises": {
-                    "relation": [{"id": dance_id} for dance_id in cls.danses_apprises]
-                },
-                "danses_revisees": {
-                    "relation": [{"id": dance_id} for dance_id in cls.danses_revisees]
-                },
+            "Date": {"title": [{"text": {"content": cls.date}}]},
+            "Type": {"select": {"name": cls.type}},
+            "Niveau": {"select": {"name": cls.niveau}},
+            "Danses apprises": {
+                "relation": [{"id": dance_id} for dance_id in cls.danses_apprises]
+            },
+            "Danses révisées": {
+                "relation": [{"id": dance_id} for dance_id in cls.danses_revisees]
             },
         }

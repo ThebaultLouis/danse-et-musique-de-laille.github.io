@@ -17,10 +17,9 @@ class FirestoreClasse:
     reviewedDances: List[str]
     learnedDance: str
     doneOn: str
-    id: str
 
-    @classmethod
-    def from_dict(cls, classe: dict) -> "FirestoreClasse":
+    @staticmethod
+    def from_dict(classe: dict) -> "FirestoreClasse":
         level = FirestoreClasseLevel(
             classe.get("level", FirestoreClasseLevel.UNDEFINED)
         )
@@ -28,4 +27,9 @@ class FirestoreClasse:
         learnedDance = classe.get("learnedDance", None)
         doneOn = classe.get("doneOn", None)
 
-        return cls(level, reviewedDances, learnedDance, doneOn)
+        return FirestoreClasse(
+            level=level,
+            reviewedDances=reviewedDances,
+            learnedDance=learnedDance,
+            doneOn=doneOn,
+        )

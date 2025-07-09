@@ -21,8 +21,8 @@ class NotionDanse:
         return NOTION_DANSES_DATABASE_ID
 
     @staticmethod
-    def from_firestore_dance(cls, firestore_dance: FirestoreDance) -> "NotionDanse":
-        cls(
+    def from_firestore_dance(firestore_dance: FirestoreDance) -> "NotionDanse":
+        return NotionDanse(
             id=None,
             nom=firestore_dance.name,
             lien_de_la_musique=firestore_dance.song_link,
@@ -30,29 +30,25 @@ class NotionDanse:
             pdf_de_la_chorégrapgie=firestore_dance.s3_file_url,
         )
 
-    @classmethod
     def to_notion_client_create_page_body(cls):
         return {
-            "parent": {"database_id": NOTION_DANSES_DATABASE_ID},
-            "properties": {
-                "Nom": {"title": [{"text": {"content": cls.nom}}]},
-                "Lien de la musique": {"url": cls.lien_de_la_musique},
-                "Lien de la chorégraphie": {"url": cls.lien_de_la_choregraphie},
-                "Pdf de la chorégraphie": {
-                    "files": [
-                        {
-                            "name": "Chorégraphie PDF",
-                            "external": {"url": cls.pdf_de_la_chorégrapgie},
-                        }
-                    ]
-                },
+            "Nom": {"title": [{"text": {"content": cls.nom}}]},
+            "Lien de la musique": {"url": cls.lien_de_la_musique},
+            "Lien de la chorégraphie": {"url": cls.lien_de_la_choregraphie},
+            "Pdf de la chorégraphie": {
+                "files": [
+                    {
+                        "name": "Chorégraphie PDF",
+                        "external": {"url": cls.pdf_de_la_chorégrapgie},
+                    }
+                ]
             },
         }
 
     @staticmethod
-    def from_notion_page(cls, page: dict) -> "NotionDanse":
+    def from_notion_page(page: dict) -> "NotionDanse":
         properties = page["properties"]
-        return cls(
+        return NotionDanse(
             id=page["id"],
             nom=(
                 properties["Nom"]["title"][0]["text"]["content"]
