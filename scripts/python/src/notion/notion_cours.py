@@ -35,6 +35,10 @@ class NotionCours:
     danses_apprises: List[str]
     danses_revisees: List[str]
 
+    @property
+    def notion_key(cls):
+        return f"{cls.date}-{cls.niveau}"
+    
     @staticmethod
     def database_id():
         return NOTION_COURS_DATABASE_ID
@@ -66,3 +70,22 @@ class NotionCours:
                 "relation": [{"id": dance_id} for dance_id in cls.danses_revisees]
             },
         }
+    
+    @staticmethod
+    def from_notion_page(page: dict) -> "NotionCours":
+        properties = page["properties"]
+    
+        date = properties["Date"]["title"][0]["text"]["content"]
+        type_ = properties["Type"]["select"]["name"]
+        niveau = NotionCoursNiveau(properties["Niveau"]["select"]["name"])
+
+        danses_apprises = [rel["id"] for rel in properties["Danses apprises"]["relation"]]
+        danses_revisees = [rel["id"] for rel in properties["Danses révisées"]["relation"]]
+
+        return NotionCours(
+            date=date,
+            type=type_,
+            niveau=niveau,
+            danses_apprises=danses_apprises,
+            danses_revisees=danses_revisees,
+        )

@@ -20,22 +20,29 @@ def get_firestore_dance_id_to_notion_danse_id():
 
 def import_danse_dabatase_from_firebase_backup():
     firestore_dance_id_to_notion_danse_id = get_firestore_dance_id_to_notion_danse_id()
+    notion_cours = notion_service.cours()
+    notion_cours_keys = [cours.notion_key for cours in notion_cours]
 
     for classe in firebase_collections.firestore_classes():
-        notion_cours = NotionCours.from_firestore_classe(
-            firestore_classe=classe,
-            danses_apprises=[
-                firestore_dance_id_to_notion_danse_id[classe.learnedDance]
-            ],
-            danses_revisees=[
-                firestore_dance_id_to_notion_danse_id[reviewedDanceId]
-                for reviewedDanceId in classe.reviewedDances
-            ],
-        )
-        notion_service.create_cours(notion_cours)
-        print("✅ Added:", notion_cours.date, notion_cours.niveau)
-        time.sleep(0.4)  # Notion API rate limit: ~3 requests/sec
-        return
+        try:
+            notion_cours = NotionCours.from_firestore_classe(
+                firestore_classe=classe,
+                danses_apprises=[
+                    firestore_dance_id_to_notion_danse_id[classe.learnedDance]
+                ] if classe.learnedDance != None else [],
+                danses_revisees=[
+                    firestore_dance_id_to_notion_danse_id[reviewedDanceId]
+                    for reviewedDanceId in classe.reviewedDances
+                ],
+            )
+            if notion_cours.notion_key in notion_cours_keys:
+                continue
+            notion_service.create_cours(notion_cours)
+            print("✅ Added:", notion_cours.date, notion_cours.niveau)
+            time.sleep(0.4)  # Notion API rate limit: ~3 requests/sec
+            # return
+        except Exception as e:
+            print(e)
 
 
 if __name__ == "__main__":
