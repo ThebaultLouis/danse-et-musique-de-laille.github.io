@@ -2,3 +2,4 @@ requests
 boto3
 dotenv
 black
+notion-client
