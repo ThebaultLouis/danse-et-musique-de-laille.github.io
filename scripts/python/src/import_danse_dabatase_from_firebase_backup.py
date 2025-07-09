@@ -13,7 +13,7 @@ def import_danse_dabatase_from_firebase_backup():
         if notion_danse.nom in notion_danse_noms:
             continue
         notion_service.create_danse(notion_danse)
-        print("✅ Added:", notion_danse.name)
+        print("✅ Added:", notion_danse.nom)
         time.sleep(0.4)  # Notion API rate limit: ~3 requests/sec
         # return
 
