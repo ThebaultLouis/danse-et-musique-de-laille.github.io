@@ -1,3 +1,4 @@
+import mimetypes
 import os
 import requests
 import urllib
@@ -41,13 +42,19 @@ class S3MigrationClient:
             return
 
         file_data = response.content
+        content_type=response.headers.get("Content-Type")
+        if content_type is not None:
+            file_extension = mimetypes.guess_extension(content_type)
+            if file_extension is not None:
+                 file_base = os.path.splitext(s3_key)[0]
+                 s3_key = file_base + file_extension
 
         try:
             self.s3.put_object(
                 Bucket=S3_BUCKET_NAME,
                 Key=s3_key,
                 Body=file_data,
-                ContentType=response.headers.get("Content-Type"),
+                ContentType=content_type,
             )
             print(f"Migrated {s3_key}")
         except Exception as e:

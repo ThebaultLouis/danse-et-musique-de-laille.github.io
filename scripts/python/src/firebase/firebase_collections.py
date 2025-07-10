@@ -1,6 +1,7 @@
 import json
 import os
 from dotenv import load_dotenv
+from .firestore_album import FirestoreAlbum
 from .firestore_dance import FirestoreDance
 from .firestore_classe import FirestoreClasse
 from .firestore_event import FirestoreEvent
@@ -32,3 +33,9 @@ def firestore_events():
     data = read_firestore_backup()
     events: dict = data["__collections__"]["events"]
     return [FirestoreEvent.from_dict(event) for event in events.values()]
+
+
+def firestore_albums():
+    data = read_firestore_backup()
+    albums: dict = data["__collections__"]["albums"]
+    return [FirestoreAlbum.from_dict(album) for album in albums.values()]
