@@ -1,11 +1,3 @@
-export type TDanse = {
-  id: string
-  nom: string
-  musiqueUrl: string
-  videoUrl: string
-  pdfUrl: string
-}
-
 export class Danse {
   constructor(
     public id: string,
@@ -15,21 +7,22 @@ export class Danse {
     public pdfUrl: string
   ) { }
 
-  get nuxtPath() {
-    return `danses/${this.id}`
+  nuxtPath() {
+    return { name: 'danses', params: { id: this.id } }
   }
 
-  static toPinia(page: any): TDanse {
-    return {
-      id: page.id,
-      nom: page.properties?.Nom?.title?.[0]?.plain_text || '',
-      musiqueUrl: page.properties?.['Lien de la musique']?.url || '',
-      videoUrl: page.properties?.['Lien de la chorégraphie']?.url || '',
-      pdfUrl: page.properties?.['Pdf de la chorégraphie']?.files?.[0]?.file?.url || ''
-    }
-  }
-
-  static fromPinia(danse: TDanse) {
-    return new Danse(danse.id, danse.nom, danse.musiqueUrl, danse.videoUrl, danse.pdfUrl)
+  static fromNotion(page: any): Danse {
+    const id = page.id
+    const nom = page.properties?.Nom?.title?.[0]?.plain_text || ''
+    const musiqueUrl = page.properties?.['Lien de la musique']?.url || ''
+    const videoUrl = page.properties?.['Lien de la chorégraphie']?.url || ''
+    const pdfUrl = page.properties?.['Pdf de la chorégraphie']?.files?.[0]?.file?.url || ''
+    return new Danse(
+      id,
+      nom,
+      musiqueUrl,
+      videoUrl,
+      pdfUrl
+    )
   }
 }

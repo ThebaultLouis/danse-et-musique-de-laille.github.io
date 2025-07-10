@@ -31,7 +31,7 @@
             :to="danse.nuxtPath"
             class="hover:text-blue-600 hover:underline"
           >
-            {{ danse }}
+            {{ danse.nom }}
           </NuxtLink>
         </li>
       </ul>
@@ -47,7 +47,7 @@
             :to="danse.nuxtPath"
             class="hover:text-blue-600 hover:underline"
           >
-            {{ danse }}
+            {{ danse.nom }}
           </NuxtLink>
         </li>
       </ul>
@@ -56,8 +56,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from "vue";
-import type { Cours } from "~/models/Cours";
+import { defineProps, type PropType } from "vue";
+import type { Cours } from "~/models";
 
 const { cours } = defineProps({
   cours: Object as PropType<Cours>,

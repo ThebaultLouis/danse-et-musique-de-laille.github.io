@@ -62,9 +62,11 @@
 
 <script lang="ts" setup>
 const route = useRoute();
-const { danses } = useDanses();
-const danse = danses.value.find(
-  (danse: { id: any }) => danse.id == route.params.id
+const { data: danses } = await useAsyncData<Danse[]>("article", () =>
+  $fetch(`/notion-cache/danses/danses.json`)
+);
+const danse = computed(() =>
+  danses.value?.find((d) => d.id === route.params.id)
 );
 </script>
 
