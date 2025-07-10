@@ -38,10 +38,10 @@
                 class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
               >
                 <NuxtLink
-                  :to="danse.nuxtPath()"
+                  :to="{ name: 'danses', params: { id: danse.id } }"
                   class="hover:text-blue-600 hover:underline"
                 >
-                  {{ danse.nom }} {{ danse.nuxtPath() }} {{ danse.id }}
+                  {{ danse.nom }}
                 </NuxtLink>
               </td>
             </tr>

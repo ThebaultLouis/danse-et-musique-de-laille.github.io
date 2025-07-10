@@ -28,7 +28,7 @@
           class="text-gray-700"
         >
           <NuxtLink
-            :to="danse.nuxtPath"
+            :to="{ name: 'danses', params: { id: danse.id } }"
             class="hover:text-blue-600 hover:underline"
           >
             {{ danse.nom }}
@@ -44,7 +44,7 @@
           class="text-gray-700"
         >
           <NuxtLink
-            :to="danse.nuxtPath"
+            :to="{ name: 'danses', params: { id: danse.id } }"
             class="hover:text-blue-600 hover:underline"
           >
             {{ danse.nom }}

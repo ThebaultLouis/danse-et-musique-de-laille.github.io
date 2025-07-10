@@ -7,10 +7,6 @@ export class Danse {
     public pdfUrl: string
   ) { }
 
-  nuxtPath() {
-    return { name: 'danses', params: { id: this.id } }
-  }
-
   static fromNotion(page: any): Danse {
     const id = page.id
     const nom = page.properties?.Nom?.title?.[0]?.plain_text || ''
