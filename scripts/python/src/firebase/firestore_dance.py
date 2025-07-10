@@ -1,13 +1,8 @@
-import os
-from dotenv import load_dotenv
 from dataclasses import dataclass
-import urllib.parse
 from dataclasses import dataclass
+from s3_migration_client.client import S3MigrationClient
 
-load_dotenv()
-
-S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
-
+s3_migration_client = S3MigrationClient()
 
 @dataclass
 class FirestoreDance:
@@ -39,6 +34,4 @@ class FirestoreDance:
 
     @property
     def s3_file_url(self):
-        if self.pdf_link == None:
-            return None
-        return f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{urllib.parse.quote(self.s3_key)}"
+        return s3_migration_client.get_s3_public_file_url(self.s3_key)

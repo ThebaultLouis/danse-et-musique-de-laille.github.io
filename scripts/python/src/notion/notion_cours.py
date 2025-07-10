@@ -4,8 +4,6 @@ import os
 from typing import List
 from dotenv import load_dotenv
 from firebase.firestore_classe import FirestoreClasse, FirestoreClasseLevel
-from firebase.firestore_dance import FirestoreDance
-from notion.notion_danse import NotionDanse
 
 load_dotenv()
 

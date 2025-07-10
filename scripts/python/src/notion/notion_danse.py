@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import os
 from dotenv import load_dotenv
 from firebase.firestore_dance import FirestoreDance
+from s3_migration_client.client import S3MigrationClient
 
 load_dotenv()
 
