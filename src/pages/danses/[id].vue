@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8" v-if="danse">
     <div class="max-w-4xl mx-auto">
       <h1 class="text-3xl font-bold text-gray-800 mb-6">
         {{ danse.nom }}
@@ -62,12 +62,14 @@
 
 <script lang="ts" setup>
 const route = useRoute();
-const { data: danses } = await useAsyncData<Danse[]>("article", () =>
-  $fetch(`/notion-cache/danses/danses.json`)
+const { data: danses } = await useFetch<Danse[]>(
+  `/notion-cache/danses/danses.json`
 );
-const danse = computed(() =>
-  danses.value?.find((d) => d.id === route.params.id)
-);
+const danse = computed(() => {
+  if (!danses.value) return null;
+  console.log(danses.value);
+  return danses.value!.find((d) => d.id === route.params.id);
+});
 </script>
 
 <style>

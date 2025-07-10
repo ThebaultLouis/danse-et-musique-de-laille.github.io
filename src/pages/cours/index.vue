@@ -45,8 +45,8 @@
 </template>
 
 <script setup lang="ts">
-const { data: cours } = await useAsyncData<Cours[]>("article", () =>
-  $fetch(`/notion-cache/cours/cours.json`)
+const { data: cours } = await useFetch<Cours[]>(
+  `/notion-cache/cours/cours.json`
 );
 
 const selectedNiveau = ref("");
@@ -54,7 +54,7 @@ const selectedType = ref("");
 const selectedDate = ref("");
 
 const filteredCours = computed(() => {
-  if (cours.value == null) {
+  if (!cours.value) {
     return [];
   }
   return cours.value!.filter(

@@ -38,7 +38,7 @@
                 class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
               >
                 <NuxtLink
-                  :to="{ name: 'danses', params: { id: danse.id } }"
+                  :to="`danses/${danse.id}`"
                   class="hover:text-blue-600 hover:underline"
                 >
                   {{ danse.nom }}
@@ -63,14 +63,14 @@
 <script setup lang="ts">
 import type { Danse } from "~/models";
 
-const { data: danses } = await useAsyncData<Danse[]>("article", () =>
-  $fetch(`/notion-cache/danses/danses.json`)
+const { data: danses } = await useFetch<Danse[]>(
+  `/notion-cache/danses/danses.json`
 );
 
 const searchQuery = ref("");
 
 const filteredDanses = computed(() => {
-  if (danses == null) {
+  if (!danses.value) {
     return [];
   }
   return danses.value!.filter((danse: { nom: string | any[] }) =>
