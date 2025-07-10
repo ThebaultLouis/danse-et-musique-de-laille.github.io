@@ -62,9 +62,7 @@
 
 <script lang="ts" setup>
 const route = useRoute();
-const { data: danses } = await useFetch<Danse[]>(
-  `/notion-cache/danses/danses.json`
-);
+const { data: danses } = await useFetch<Danse[]>(`/cache/danses.json`);
 const danse = computed(() => {
   if (!danses.value) return null;
   console.log(danses.value);

@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prebuild": "npx tsx scripts/fetch-notion-content.ts",
+    "cache:s3:photos": "npx tsx scripts/cache-s3-albums.ts",
+    "cache:notion:databases": "npx tsx scripts/cache-notion-databases.ts",
+    "prebuild": "npm run cache:notion:databases",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -26,6 +28,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "aws-sdk": "^2.1692.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }

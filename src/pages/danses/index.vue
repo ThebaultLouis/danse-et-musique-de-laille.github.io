@@ -63,9 +63,7 @@
 <script setup lang="ts">
 import type { Danse } from "~/models";
 
-const { data: danses } = await useFetch<Danse[]>(
-  `/notion-cache/danses/danses.json`
-);
+const { data: danses } = await useFetch<Danse[]>(`/cache/danses.json`);
 
 const searchQuery = ref("");
 

@@ -45,9 +45,7 @@
 </template>
 
 <script setup lang="ts">
-const { data: cours } = await useFetch<Cours[]>(
-  `/notion-cache/cours/cours.json`
-);
+const { data: cours } = await useFetch<Cours[]>(`/cache/cours.json`);
 
 const selectedNiveau = ref("");
 const selectedType = ref("");
