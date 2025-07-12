@@ -3,10 +3,10 @@
     <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">
       Albums photos
     </h1>
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto flex justify-center">
       <table
         v-if="sortedAlbums"
-        class="w-full bg-white shadow-md rounded-lg overflow-hidden"
+        class="w-full max-w-xl bg-white shadow-md rounded-lg overflow-hidden"
       >
         <thead class="bg-gray-100">
           <tr>
@@ -26,7 +26,8 @@
           <tr
             v-for="album in albums"
             :key="album.id"
-            class="hover:bg-gray-50 transition-colors"
+            class="hover:bg-gray-50 transition-colors cursor-pointer"
+            @click="$router.push(`/photos/${album.id}`)"
           >
             <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
               {{ album.date }}

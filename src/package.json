@@ -5,7 +5,7 @@
   "scripts": {
     "cache:s3:photos": "npx tsx scripts/cache-s3-albums.ts",
     "cache:notion:databases": "npx tsx scripts/cache-notion-databases.ts",
-    "prebuild": "npm run cache:notion:databases",
+    "prebuild": "npm run cache:notion:databases && npm run cache:s3:photos",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",

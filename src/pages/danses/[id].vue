@@ -65,7 +65,6 @@ const route = useRoute();
 const { data: danses } = await useFetch<Danse[]>(`/cache/danses.json`);
 const danse = computed(() => {
   if (!danses.value) return null;
-  console.log(danses.value);
   return danses.value!.find((d) => d.id === route.params.id);
 });
 </script>

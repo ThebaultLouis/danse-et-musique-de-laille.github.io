@@ -39,7 +39,103 @@
         </select>
       </div>
 
-      <PagesCoursTable :cours="filteredCours" />
+      <div class="overflow-x-auto">
+        <table
+          v-if="cours"
+          class="w-full bg-white shadow-md rounded-lg overflow-hidden"
+        >
+          <thead class="bg-gray-100">
+            <tr>
+              <th
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Date
+              </th>
+              <th
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Type
+              </th>
+              <th
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Niveau
+              </th>
+              <th
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Danses Apprises
+              </th>
+              <th
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Danses Révisées
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr
+              v-for="cours in cours"
+              :key="cours.id"
+              class="hover:bg-gray-50 transition-colors"
+            >
+              <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
+                {{ cours.date }}
+              </td>
+              <td class="px-4 py-4 whitespace-nowrap">
+                <span class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {{ cours.type }}
+                </span>
+              </td>
+              <td class="px-4 py-4 whitespace-nowrap">
+                <span
+                  class="px-2 py-1 rounded-full text-xs font-medium"
+                  :class="{
+                    'bg-green-100 text-green-800': cours.niveau === 'Débutant',
+                    'bg-yellow-100 text-yellow-800': cours.niveau === 'Novice',
+                    'bg-orange-100 text-orange-800':
+                      cours.niveau === 'Intermédiaire',
+                  }"
+                >
+                  {{ cours.niveau }}
+                </span>
+              </td>
+              <td class="px-4 py-4">
+                <ul class="space-y-1">
+                  <li
+                    v-for="danse in cours.dansesApprises"
+                    :key="danse.id"
+                    class="text-gray-700"
+                  >
+                    <NuxtLink
+                      :to="`danses/${danse.id}`"
+                      class="hover:text-blue-600 hover:underline"
+                    >
+                      {{ danse.nom }}
+                    </NuxtLink>
+                  </li>
+                </ul>
+              </td>
+              <td class="px-4 py-4">
+                <ul class="space-y-1">
+                  <li
+                    v-for="danse in cours.dansesRevisees"
+                    :key="danse.id"
+                    class="text-gray-700"
+                  >
+                    <NuxtLink
+                      :to="`danses/${danse.id}`"
+                      class="hover:text-blue-600 hover:underline"
+                    >
+                      {{ danse.nom }}
+                    </NuxtLink>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

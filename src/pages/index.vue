@@ -2,7 +2,7 @@
   <div class="bg-white text-gray-800">
     <div
       class="bg-cover bg-center h-screen text-white"
-      :style="{ backgroundImage: `url(${backgroundImagePath})` }"
+      :style="{ backgroundImage: `url(fichiers/images/home.jpg)` }"
     >
       <div
         class="bg-black bg-opacity-40 h-full flex flex-col justify-center items-center text-center px-4"
@@ -78,8 +78,6 @@
 </template>
 
 <script lang="ts" setup>
-import backgroundImagePath from "~/static/images/home.jpg";
-
 const detailsDesCoursCountry = [
   {
     niveau: "Débutants",
