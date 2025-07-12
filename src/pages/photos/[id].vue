@@ -10,15 +10,35 @@
     <h1 class="text-2xl font-bold mb-2">{{ album.name }}</h1>
     <p class="text-gray-500 mb-6">{{ album.date }}</p>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <img
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl mx-auto"
+    >
+      <div
         v-for="(photo, index) in filteredPhotos"
         :key="index"
-        :src="photo"
-        loading="lazy"
-        class="rounded shadow object-cover w-full h-64 cursor-pointer hover:scale-105 transition"
-        @click="openFullscreen(index)"
-      />
+        class="relative w-full aspect-square overflow-hidden rounded"
+      >
+        <div
+          v-if="photo.endsWith('.pdf')"
+          class="flex flex-col items-center justify-center bg-gray-100 border rounded p-4 text-center w-full h-full"
+        >
+          <a
+            :href="photo"
+            target="_blank"
+            class="mt-2 text-blue-600 text-sm underline hover:text-blue-800"
+          >
+            Open PDF
+          </a>
+        </div>
+
+        <img
+          v-else
+          :src="photo"
+          loading="lazy"
+          class="rounded shadow object-cover w-full h-full cursor-pointer hover:scale-105 transition"
+          @click="openFullscreen(index)"
+        />
+      </div>
     </div>
 
     <!-- Lightbox -->
@@ -50,9 +70,7 @@ const route = useRoute();
 const albumId = route.params.id;
 const album = computed(() => albums.value?.find((a) => a.id === albumId));
 
-const filteredPhotos = computed(() =>
-  album.value?.photos.filter((photo) => !photo.endsWith(".pdf"))
-);
+const filteredPhotos = computed(() => album.value?.photos);
 
 const fullscreenPhoto = ref(null);
 const currentIndex = ref(-1);
