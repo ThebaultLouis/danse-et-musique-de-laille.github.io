@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6">
+  <div class="p-6 max-w-7xl mx-auto">
     <NuxtLink
       to="/photos"
       class="text-blue-500 hover:underline mb-4 inline-block"
@@ -10,9 +10,7 @@
     <h1 class="text-2xl font-bold mb-2">{{ album.name }}</h1>
     <p class="text-gray-500 mb-6">{{ album.date }}</p>
 
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl mx-auto"
-    >
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       <div
         v-for="(photo, index) in filteredPhotos"
         :key="index"
