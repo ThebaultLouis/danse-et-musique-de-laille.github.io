@@ -91,12 +91,9 @@
               <td class="px-4 py-4 whitespace-nowrap">
                 <span
                   class="px-2 py-1 rounded-full text-xs font-medium"
-                  :class="{
-                    'bg-green-100 text-green-800': cours.niveau === 'Débutant',
-                    'bg-yellow-100 text-yellow-800': cours.niveau === 'Novice',
-                    'bg-orange-100 text-orange-800':
-                      cours.niveau === 'Intermédiaire',
-                  }"
+                  :class="`bg-${typeDeDanseParCouleur[cours.niveau]}-100 text-${
+                    typeDeDanseParCouleur[cours.niveau]
+                  }-800`"
                 >
                   {{ cours.niveau }}
                 </span>
@@ -160,6 +157,9 @@ useHead({
 });
 
 const { data: cours } = await useFetch<Cours[]>(`/cache/cours.json`);
+const { data: coursDatabaseProperties } = await useFetch(
+  `/cache/cours-database-properties.json`
+);
 const route = useRoute();
 const router = useRouter();
 
@@ -171,6 +171,13 @@ const typesDeDanses = computed(
 );
 const joursDeDanses = computed(
   () => new Set(cours.value?.map((cours: Cours) => cours.date))
+);
+const typeDeDanseParCouleur = computed(() =>
+  Object.fromEntries(
+    coursDatabaseProperties.value?.properties?.Niveau?.select?.options.map(
+      (option) => [option.name, option.color]
+    ) || []
+  )
 );
 
 const selectedNiveau = ref(route.query.niveau || "");

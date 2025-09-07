@@ -15,6 +15,10 @@ export class NotionClient {
     }
   }
 
+  async fetchDanseDatabaseProperties() {
+    return this.client.databases.retrieve({ database_id: this.databaseIds.danses })
+  }
+
   async fetchDansePages() {
     const danses = await collectPaginatedAPI(this.client.databases.query, {
       database_id: this.databaseIds.danses,
@@ -26,6 +30,10 @@ export class NotionClient {
       ],
     })
     return danses
+  }
+
+  async fetchCoursDatabaseProperties() {
+    return this.client.databases.retrieve({ database_id: this.databaseIds.cours })
   }
 
   async fetchCoursPages() {

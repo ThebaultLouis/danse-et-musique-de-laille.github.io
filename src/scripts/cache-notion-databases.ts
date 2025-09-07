@@ -10,11 +10,15 @@ const notionClient = new NotionClient(process.env.NOTION_API_KEY!, process.env.N
 
 async function main() {
   try {
+    const danseDatabaseProperties = await notionClient.fetchDanseDatabaseProperties()
     const dansePages = await notionClient.fetchDansePages()
+    const coursDatabaseProperties = await notionClient.fetchCoursDatabaseProperties()
     const coursPages = await notionClient.fetchCoursPages()
     const danses = dansePages.map(dansePage => Danse.fromNotion(dansePage))
     const cours = coursPages.map(coursPage => Cours.fromNotion(coursPage, danses))
+    saveObjectLocally(danseDatabaseProperties, "danse-database-properties.json")
     saveObjectLocally(danses, "danses.json")
+    saveObjectLocally(coursDatabaseProperties, "cours-database-properties.json")
     saveObjectLocally(cours, "cours.json")
     console.log('✅ All Notion databases saved.')
   } catch (err) {
