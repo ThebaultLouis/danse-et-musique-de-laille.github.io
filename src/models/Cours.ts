@@ -12,8 +12,8 @@ export class Cours {
 
   static fromNotion(page: any, danses: Danse[]): Cours {
     const id = page.id
-    const type = page.properties?.Date?.title?.[0]?.plain_text || ''
-    const date = page.properties?.Type?.select?.name || ''
+    const date = page.properties?.Date?.title?.[0]?.plain_text || ''
+    const type = page.properties?.Type?.select?.name || ''
     const niveau = page.properties?.Niveau?.select?.name || ''
 
 

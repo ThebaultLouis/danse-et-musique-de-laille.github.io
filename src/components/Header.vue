@@ -33,18 +33,6 @@
         >
           Photos
         </NuxtLink>
-        <NuxtLink
-          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
-          to="/a-propos"
-        >
-          À-propos
-        </NuxtLink>
-        <NuxtLink
-          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
-          to="/contact"
-        >
-          Contact
-        </NuxtLink>
       </nav>
 
       <!-- Menu Mobile -->
@@ -95,9 +83,7 @@
           <NuxtLink to="/cours" @click="toggleMobileMenu"> Cours </NuxtLink>
           <NuxtLink to="/danses" @click="toggleMobileMenu"> Danses </NuxtLink>
           <NuxtLink to="/agenda" @click="toggleMobileMenu"> Agenda </NuxtLink>
-          <NuxtLink to="/instagram" @click="toggleMobileMenu">
-            Instagram
-          </NuxtLink>
+          <NuxtLink to="/photos" @click="toggleMobileMenu"> Photos </NuxtLink>
         </nav>
       </div>
     </div>

@@ -62,6 +62,34 @@
 
 <script setup lang="ts">
 import type { Danse } from "~/models";
+import Fuse from "fuse.js";
+
+useHead({
+  title: "Danses - DML Country",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Explorez notre liste complète de danses pratiquées à DML Country.",
+    },
+    { property: "og:title", content: "Danses - DML Country" },
+    {
+      property: "og:description",
+      content:
+        "Explorez notre liste complète de danses country pratiquées à DML Country.",
+    },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://dml-country/danses" },
+  ],
+});
+
+const options = {
+  keys: ["nom"],
+  threshold: 0.3,
+  ignoreLocation: true,
+};
+
+const fuse = computed(() => new Fuse(danses.value || [], options));
 
 const { data: danses } = await useFetch<Danse[]>(`/cache/danses.json`);
 
@@ -71,8 +99,9 @@ const filteredDanses = computed(() => {
   if (!danses.value) {
     return [];
   }
-  return danses.value!.filter((danse: { nom: string | any[] }) =>
-    danse.nom.includes(searchQuery.value)
-  );
+  if (!searchQuery.value.trim()) {
+    return danses.value || [];
+  }
+  return fuse.value.search(searchQuery.value).map((result) => result.item);
 });
 </script>

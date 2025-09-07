@@ -10,9 +10,9 @@
           class="select select-bordered w-full max-w-xs px-4 py-2 border rounded-lg"
         >
           <option value="">Tous les niveaux</option>
-          <option value="Débutant">Débutant</option>
-          <option value="Intermédiaire">Intermédiaire</option>
-          <option value="Avancé">Avancé</option>
+          <option v-for="niveau in niveaux" :key="niveau" :value="niveau">
+            {{ niveau }}
+          </option>
         </select>
 
         <select
@@ -20,8 +20,13 @@
           class="select select-bordered w-full max-w-xs px-4 py-2 border rounded-lg"
         >
           <option value="">Tous les types</option>
-          <option value="Country">Country</option>
-          <option value="Catalan">Catalan</option>
+          <option
+            v-for="typeDeDanses in typesDeDanses"
+            :key="typeDeDanses"
+            :value="typeDeDanses"
+          >
+            {{ typeDeDanses }}
+          </option>
         </select>
 
         <select
@@ -29,11 +34,7 @@
           class="select select-bordered w-full max-w-xs px-4 py-2 border rounded-lg"
         >
           <option value="">Tous les jours</option>
-          <option
-            v-for="date in new Set(cours.map((cours) => cours.date))"
-            :key="date"
-            :value="date"
-          >
+          <option v-for="date in joursDeDanses" :key="date" :value="date">
             {{ date }}
           </option>
         </select>
@@ -47,27 +48,27 @@
           <thead class="bg-gray-100">
             <tr>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/10"
               >
                 Date
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/10"
               >
                 Type
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/10"
               >
                 Niveau
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5"
               >
                 Danses Apprises
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2"
               >
                 Danses Révisées
               </th>
@@ -75,7 +76,7 @@
           </thead>
           <tbody class="divide-y divide-gray-200">
             <tr
-              v-for="cours in cours"
+              v-for="cours in filteredCours"
               :key="cours.id"
               class="hover:bg-gray-50 transition-colors"
             >
@@ -116,21 +117,19 @@
                   </li>
                 </ul>
               </td>
-              <td class="px-4 py-4">
-                <ul class="space-y-1">
-                  <li
-                    v-for="danse in cours.dansesRevisees"
-                    :key="danse.id"
-                    class="text-gray-700"
+              <td class="px-4 py-4 text-gray-700">
+                <span
+                  v-for="(danse, index) in cours.dansesRevisees"
+                  :key="danse.id"
+                >
+                  <NuxtLink
+                    :to="`danses/${danse.id}`"
+                    class="hover:text-blue-600 hover:underline"
                   >
-                    <NuxtLink
-                      :to="`danses/${danse.id}`"
-                      class="hover:text-blue-600 hover:underline"
-                    >
-                      {{ danse.nom }}
-                    </NuxtLink>
-                  </li>
-                </ul>
+                    {{ danse.nom }}
+                  </NuxtLink>
+                  <span v-if="index < cours.dansesRevisees.length - 1">, </span>
+                </span>
               </td>
             </tr>
           </tbody>
@@ -141,22 +140,66 @@
 </template>
 
 <script setup lang="ts">
-const { data: cours } = await useFetch<Cours[]>(`/cache/cours.json`);
+useHead({
+  title: "Cours de danse - DML Country",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Découvrez tous nos cours de danse Country à Laillé (35) pour tous niveaux.",
+    },
+    { property: "og:title", content: "Cours de danse - DML Country" },
+    {
+      property: "og:description",
+      content:
+        "Découvrez tous nos cours de danse country à Laillé (35) pour tous niveaux.",
+    },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://dml-country/cours" },
+  ],
+});
 
-const selectedNiveau = ref("");
-const selectedType = ref("");
-const selectedDate = ref("");
+const { data: cours } = await useFetch<Cours[]>(`/cache/cours.json`);
+const route = useRoute();
+const router = useRouter();
+
+const niveaux = computed(
+  () => new Set(cours.value?.map((cours: Cours) => cours.niveau))
+);
+const typesDeDanses = computed(
+  () => new Set(cours.value?.map((cours: Cours) => cours.type))
+);
+const joursDeDanses = computed(
+  () => new Set(cours.value?.map((cours: Cours) => cours.date))
+);
+
+const selectedNiveau = ref(route.query.niveau || "");
+const selectedType = ref(route.query.type || "");
+const selectedDate = ref(route.query.date || "");
+
+watch([selectedNiveau, selectedType, selectedDate], ([niveau, type, date]) => {
+  console.log(type);
+  router.replace({
+    query: {
+      ...route.query,
+      niveau: niveau || undefined,
+      type: type || undefined,
+      date: date || undefined,
+    },
+  });
+});
 
 const filteredCours = computed(() => {
   if (!cours.value) {
     return [];
   }
-  return cours.value!.filter(
-    (cours) =>
-      !selectedNiveau.value ||
-      (cours.niveau === selectedNiveau.value &&
-        (!selectedType.value || cours.type === selectedType.value) &&
-        (!selectedDate.value || cours.date === selectedDate.value))
-  );
+  return cours.value.filter((c) => {
+    const matchNiveau =
+      !selectedNiveau.value || c.niveau === selectedNiveau.value;
+    const matchType = !selectedType.value || c.type === selectedType.value;
+    const matchDate = !selectedDate.value || c.date === selectedDate.value;
+
+    return matchNiveau && matchType && matchDate;
+  });
 });
 </script>
