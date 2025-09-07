@@ -90,10 +90,10 @@
               </td>
               <td class="px-4 py-4 whitespace-nowrap">
                 <span
-                  class="px-2 py-1 rounded-full text-xs font-medium"
                   :class="`bg-${typeDeDanseParCouleur[cours.niveau]}-100 text-${
                     typeDeDanseParCouleur[cours.niveau]
                   }-800`"
+                  class="px-2 py-1 rounded-full text-xs font-medium"
                 >
                   {{ cours.niveau }}
                 </span>
