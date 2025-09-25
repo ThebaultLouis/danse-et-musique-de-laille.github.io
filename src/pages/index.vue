@@ -264,7 +264,7 @@ const detailsDesCoursCountry = [
     description:
       "Ce cours s'adresse aux personnes qui veulent découvrir la danse Catalan. Les danses sont simples pour acquérir les bases des pas. Si vous découvrez tout juste la country, ou n'en avez jamais fait, alors il est fait pour vous.",
     jour: "Jeudi",
-    horaire: "18h15 - 19h10",
+    horaire: "19h30 - 20h20",
     animateur: "Chouchou",
   },
   {
@@ -273,7 +273,7 @@ const detailsDesCoursCountry = [
     description:
       "Ce cours s’adresse aux personnes qui veulent découvrir de nouvelles chorégraphies tout en travaillant avec des techniques et des rythmes encore plus variés.",
     jour: "Jeudi",
-    horaire: "18h15 - 19h10",
+    horaire: "20h30 - 22h00",
     animateur: "Chouchou",
   },
 ];
