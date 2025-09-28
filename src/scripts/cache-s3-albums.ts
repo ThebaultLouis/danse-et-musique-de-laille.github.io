@@ -1,17 +1,15 @@
-// import AWS from 'aws-sdk'
-import { S3 } from "./s3-client"
-import dotenv from 'dotenv'
 import { saveObjectLocally } from './save-object-locally'
+import { Config } from "./config"
+import AWS from 'aws-sdk'
 
-dotenv.config()
 
 async function main() {
-  const s3 = S3
+  const S3 = new AWS.S3(Config.AWS_S3_CONFIG)
 
-  const bucket = process.env.AWS_S3_BUCKET_NAME!
+  const bucket = Config.AWS_S3_BUCKET_NAME
   const prefix = 'Albums photos/'
 
-  const folders = await s3.listObjectsV2({
+  const folders = await S3.listObjectsV2({
     Bucket: bucket,
     Prefix: prefix,
     Delimiter: '/',
@@ -29,7 +27,7 @@ async function main() {
     const name = folderName.slice(11)      // "Santa Suzanna"
 
     // List photos inside this folder
-    const photosResp = await s3.listObjectsV2({
+    const photosResp = await S3.listObjectsV2({
       Bucket: bucket,
       Prefix: folderPath,
     }).promise()

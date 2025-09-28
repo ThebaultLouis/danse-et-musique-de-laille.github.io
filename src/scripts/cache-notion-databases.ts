@@ -1,15 +1,14 @@
-import dotenv from 'dotenv'
 import { Cours, Danse } from "~/models"
 import { saveObjectLocally } from "./save-object-locally"
 import { Client, collectPaginatedAPI } from '@notionhq/client'
+import { Config } from './config'
 
-dotenv.config()
 
-const notionClient = new Client({ auth: process.env.NOTION_API_KEY! })
+const notionClient = new Client({ auth: Config.NOTION_API_KEY! })
 
 
 async function cacheDanseDatabase() {
-  const danseDatabaseId = process.env.NOTION_DANSES_DATABASE_ID!
+  const danseDatabaseId = Config.NOTION_DANSES_DATABASE_ID!
   const danseDatabaseProperties = await notionClient.databases.retrieve({ database_id: danseDatabaseId })
   const dansePages = await collectPaginatedAPI(notionClient.databases.query, {
     database_id: danseDatabaseId,
@@ -27,7 +26,7 @@ async function cacheDanseDatabase() {
 }
 
 async function cacheCoursDatabase(danses: Danse[]) {
-  const coursDatabaseId = process.env.NOTION_COURS_DATABASE_ID!
+  const coursDatabaseId = Config.NOTION_COURS_DATABASE_ID!
   const coursDatabaseProperties = await notionClient.databases.retrieve({ database_id: coursDatabaseId })
   const coursPages = await collectPaginatedAPI(notionClient.databases.query, {
     database_id: coursDatabaseId,

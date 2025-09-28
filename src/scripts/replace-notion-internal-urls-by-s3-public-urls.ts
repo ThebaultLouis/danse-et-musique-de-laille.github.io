@@ -1,15 +1,15 @@
 import { Client } from '@notionhq/client'
-import dotenv from 'dotenv'
 import axios from "axios";
-import { S3 } from "./s3-client"
+import { Config } from './config';
+import AWS from 'aws-sdk';
 
-dotenv.config()
 
 async function main() {
-  const notionClient = new Client({ auth: process.env.NOTION_API_KEY! })
+  const S3 = new AWS.S3(Config.AWS_S3_CONFIG)
+  const notionClient = new Client({ auth: Config.NOTION_API_KEY! })
 
   const danses = await notionClient.databases.query({
-    database_id: process.env.NOTION_DANSES_DATABASE_ID!,
+    database_id: Config.NOTION_DANSES_DATABASE_ID!,
     sorts: [
       {
         timestamp: "last_edited_time", // Sort by created_time
@@ -39,7 +39,7 @@ async function main() {
     const response = await axios.get(notionUrl, { responseType: "arraybuffer" });
     const buffer = Buffer.from(response.data);
 
-    const bucket = process.env.AWS_S3_BUCKET_NAME!
+    const bucket = Config.AWS_S3_BUCKET_NAME!
     const prefix = "Danses"
     const nomDeLaDanse = (page as any).properties?.Nom?.title?.[0]?.plain_text || ''
     const s3Key = `${prefix}/${nomDeLaDanse}/${filename}`
@@ -51,7 +51,7 @@ async function main() {
       ContentType: response.headers["content-type"] || "application/octet-stream",
     }).promise()
 
-    const s3Url = `https://${bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Key}`;
+    const s3Url = `https://${bucket}.s3.${Config.AWS_REGION}.amazonaws.com/${s3Key}`;
 
     await notionClient.pages.update({
       page_id: page.id,
