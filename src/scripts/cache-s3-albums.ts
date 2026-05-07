@@ -33,7 +33,7 @@ async function main() {
       Prefix: folderPath,
     }).promise()
 
-    const photos = photosResp.Contents?.map(obj => s3KeyToCloudFrontUrl(obj.Key!)) ?? []
+    const photos = photosResp.Contents?.filter(obj => !obj.Key!.endsWith('/')).map(obj => s3KeyToCloudFrontUrl(obj.Key!)) ?? []
 
     albums.push({
       id: folderName,
