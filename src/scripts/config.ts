@@ -12,6 +12,8 @@ export class Config {
   static readonly AWS_SECRET_ACCESS_KEY: string = process.env.AWS_SECRET_ACCESS_KEY!;
   static readonly AWS_REGION: string = process.env.AWS_REGION!;
   static readonly AWS_S3_BUCKET_NAME: string = process.env.AWS_S3_BUCKET_NAME!;
+  // CloudFront
+  static readonly CLOUDFRONT_HOST: string = process.env.CLOUDFRONT_HOST!;
   static readonly AWS_S3_CONFIG = {
     accessKeyId: Config.AWS_ACCESS_KEY_ID,
     secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,

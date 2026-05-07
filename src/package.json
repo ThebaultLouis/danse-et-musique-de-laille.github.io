@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "replace:notion:urls": "npx tsx scripts/replace-notion-internal-urls-by-s3-public-urls.ts",
+    "migrate:cloudfront": "npx tsx scripts/update-notion-s3-urls-to-cloudfront.ts",
     "cache:s3:photos": "npx tsx scripts/cache-s3-albums.ts",
     "cache:notion:databases": "npx tsx scripts/cache-notion-databases.ts",
     "prebuild": "npm run replace:notion:urls && npm run cache:notion:databases && npm run cache:s3:photos",

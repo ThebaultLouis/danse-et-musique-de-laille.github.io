@@ -1,5 +1,6 @@
 import { saveObjectLocally } from './save-object-locally'
 import { Config } from "./config"
+import { s3KeyToCloudFrontUrl } from './cloudfront'
 import AWS from 'aws-sdk'
 
 
@@ -32,9 +33,7 @@ async function main() {
       Prefix: folderPath,
     }).promise()
 
-    const photos = photosResp.Contents?.map(obj => {
-      return `https://${bucket}.s3.amazonaws.com/${obj.Key}`
-    }) ?? []
+    const photos = photosResp.Contents?.map(obj => s3KeyToCloudFrontUrl(obj.Key!)) ?? []
 
     albums.push({
       id: folderName,

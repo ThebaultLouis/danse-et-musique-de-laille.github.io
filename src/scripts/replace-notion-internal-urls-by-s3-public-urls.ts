@@ -1,6 +1,7 @@
 import { Client } from '@notionhq/client'
 import axios from "axios";
 import { Config } from './config';
+import { s3KeyToCloudFrontUrl } from './cloudfront';
 import AWS from 'aws-sdk';
 
 
@@ -51,7 +52,7 @@ async function main() {
       ContentType: response.headers["content-type"] || "application/octet-stream",
     }).promise()
 
-    const s3Url = `https://${bucket}.s3.${Config.AWS_REGION}.amazonaws.com/${s3Key}`;
+    const cloudfrontUrl = s3KeyToCloudFrontUrl(s3Key);
 
     await notionClient.pages.update({
       page_id: page.id,
@@ -60,14 +61,14 @@ async function main() {
           files: [
             {
               name: filename,
-              external: { url: s3Url },
+              external: { url: cloudfrontUrl },
             },
           ],
         },
       },
     });
 
-    console.log(`✅ File uploaded from Notion to S3 and updated in Notion: ${encodeURI(s3Url)}`);
+    console.log(`✅ File uploaded from Notion to S3 and updated in Notion: ${cloudfrontUrl}`);
     return;
   });
 
