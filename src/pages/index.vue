@@ -1,16 +1,36 @@
 <template>
   <div class="bg-white text-gray-800">
-    <div
-      class="bg-cover bg-center h-screen text-white"
-      :style="{ backgroundImage: `url(fichiers/images/home.jpg)` }"
-    >
+    <div class="relative h-screen min-h-[36rem] overflow-hidden text-white">
+      <picture>
+        <source
+          type="image/webp"
+          srcset="
+            /fichiers/images/home-640.webp   640w,
+            /fichiers/images/home-1280.webp 1280w,
+            /fichiers/images/home-1920.webp 1920w,
+            /fichiers/images/home-3000.webp 3000w
+          "
+          sizes="100vw"
+        >
+        <img
+          src="/fichiers/images/home.jpg"
+          alt=""
+          width="3000"
+          height="2000"
+          fetchpriority="high"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        >
+      </picture>
       <div
-        class="bg-black bg-opacity-40 h-full flex flex-col justify-center items-center text-center px-4"
+        class="relative h-full flex flex-col justify-center items-center bg-gradient-to-b from-black/40 via-black/35 to-black/60 text-center px-4 pt-20"
       >
-        <h1 class="text-4xl md:text-6xl font-bold mb-4">
+        <h1
+          class="max-w-5xl text-4xl sm:text-5xl md:text-6xl font-bold leading-tight drop-shadow-lg mb-4"
+        >
           Bienvenue à Danse et Musiques de Laille
         </h1>
-        <p class="text-lg md:text-2xl mb-6">
+        <p class="text-lg md:text-2xl drop-shadow-md mb-8">
           Cours, danses, événements… Vivez l'ambiance western !
         </p>
         <div
@@ -18,13 +38,13 @@
         >
           <NuxtLink
             to="cours"
-            class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+            class="bg-yellow-500 hover:bg-yellow-400 text-gray-950 font-bold py-3 px-6 rounded-lg shadow-lg transition-colors"
           >
             Consulter les cours
           </NuxtLink>
           <NuxtLink
             to="agenda"
-            class="bg-transparent border border-white hover:bg-white hover:text-black text-white font-bold py-2 px-4 rounded"
+            class="bg-white/10 border border-white/80 hover:bg-white hover:text-gray-950 text-white font-bold py-3 px-6 rounded-lg backdrop-blur-sm transition-colors"
           >
             Consulter l'agenda
           </NuxtLink>

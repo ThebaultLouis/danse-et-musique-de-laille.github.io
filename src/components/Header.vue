@@ -1,8 +1,18 @@
 <template>
-  <header class="bg-white shadow-md">
+  <header
+    class="z-50 w-full transition-colors duration-300"
+    :class="
+      isHomePage
+        ? 'absolute top-0 left-0 bg-gradient-to-b from-black/60 to-transparent'
+        : 'relative bg-white shadow-md'
+    "
+  >
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <NuxtLink to="/">
-        <div class="text-2xl font-bold text-gray-800">
+        <div
+          class="text-2xl font-bold transition-colors"
+          :class="isHomePage ? 'text-white drop-shadow-md' : 'text-gray-800'"
+        >
           Danse et Musiques de Laille
         </div>
       </NuxtLink>
@@ -10,25 +20,25 @@
       <!-- Navigation Desktop -->
       <nav class="hidden md:flex space-x-6">
         <NuxtLink
-          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          :class="navLinkClasses"
           to="/cours"
         >
           Cours
         </NuxtLink>
         <NuxtLink
-          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          :class="navLinkClasses"
           to="/danses"
         >
           Danses
         </NuxtLink>
         <NuxtLink
-          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          :class="navLinkClasses"
           to="/agenda"
         >
           Agenda
         </NuxtLink>
         <NuxtLink
-          class="text-gray-700 hover:text-blue-600 transition-colors duration-300 font-medium"
+          :class="navLinkClasses"
           to="/photos"
         >
           Photos
@@ -38,8 +48,14 @@
       <!-- Menu Mobile -->
       <div class="md:hidden">
         <button
+          class="focus:outline-none transition-colors"
+          :class="
+            isHomePage
+              ? 'text-white hover:text-yellow-300'
+              : 'text-gray-600 hover:text-gray-800'
+          "
+          aria-label="Ouvrir le menu"
           @click="toggleMobileMenu"
-          class="text-gray-600 hover:text-gray-800 focus:outline-none"
         >
           <svg
             v-if="!isMobileMenuOpen"
@@ -54,7 +70,7 @@
               stroke-linejoin="round"
               stroke-width="2"
               d="M4 6h16M4 12h16M4 18h16"
-            ></path>
+            />
           </svg>
           <svg
             v-else
@@ -69,7 +85,7 @@
               stroke-linejoin="round"
               stroke-width="2"
               d="M6 18L18 6M6 6l12 12"
-            ></path>
+            />
           </svg>
         </button>
       </div>
@@ -77,7 +93,12 @@
       <!-- Menu Mobile Dropdown -->
       <div
         v-if="isMobileMenuOpen"
-        class="absolute top-16 left-0 w-full bg-white shadow-lg md:hidden"
+        class="absolute top-full left-0 w-full shadow-lg md:hidden"
+        :class="
+          isHomePage
+            ? 'bg-gray-950/90 text-white backdrop-blur-md'
+            : 'bg-white text-gray-800'
+        "
       >
         <nav class="flex flex-col p-4 space-y-2">
           <NuxtLink to="/cours" @click="toggleMobileMenu"> Cours </NuxtLink>
@@ -91,7 +112,17 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({ name: "AppHeader" });
+
+const route = useRoute();
 const isMobileMenuOpen = ref(false);
+const isHomePage = computed(() => route.path === "/");
+const navLinkClasses = computed(() => [
+  "transition-colors duration-300 font-medium",
+  isHomePage.value
+    ? "text-white/90 hover:text-yellow-300 drop-shadow-sm"
+    : "text-gray-700 hover:text-blue-600",
+]);
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
