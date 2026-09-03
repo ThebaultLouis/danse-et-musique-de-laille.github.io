@@ -4,14 +4,14 @@
     :class="
       isHomePage
         ? 'absolute top-0 left-0 bg-gradient-to-b from-black/60 to-transparent'
-        : 'relative bg-white shadow-md'
+        : 'relative bg-background shadow-md'
     "
   >
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <NuxtLink to="/">
         <div
           class="text-2xl font-bold transition-colors"
-          :class="isHomePage ? 'text-white drop-shadow-md' : 'text-gray-800'"
+          :class="isHomePage ? 'text-white drop-shadow-md' : 'text-foreground'"
         >
           Danse et Musiques de Laille
         </div>
@@ -51,8 +51,8 @@
           class="focus:outline-none transition-colors"
           :class="
             isHomePage
-              ? 'text-white hover:text-yellow-300'
-              : 'text-gray-600 hover:text-gray-800'
+              ? 'text-white hover:text-secondary-light'
+              : 'text-foreground-subtle hover:text-foreground'
           "
           aria-label="Ouvrir le menu"
           @click="toggleMobileMenu"
@@ -97,7 +97,7 @@
         :class="
           isHomePage
             ? 'bg-gray-950/90 text-white backdrop-blur-md'
-            : 'bg-white text-gray-800'
+            : 'bg-background text-foreground'
         "
       >
         <nav class="flex flex-col p-4 space-y-2">
@@ -120,8 +120,8 @@ const isHomePage = computed(() => route.path === "/");
 const navLinkClasses = computed(() => [
   "transition-colors duration-300 font-medium",
   isHomePage.value
-    ? "text-white/90 hover:text-yellow-300 drop-shadow-sm"
-    : "text-gray-700 hover:text-blue-600",
+    ? "text-white/90 hover:text-secondary-light drop-shadow-sm"
+    : "text-foreground-muted hover:text-primary",
 ]);
 
 const toggleMobileMenu = () => {

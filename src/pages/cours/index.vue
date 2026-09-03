@@ -1,13 +1,13 @@
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">
+    <h1 class="text-4xl font-bold text-center mb-12 text-foreground">
       Historique des Cours
     </h1>
     <div v-if="cours">
-      <div class="mb-8 flex justify-center space-x-4">
+      <div class="mb-8 flex flex-col sm:flex-row justify-center gap-4">
         <select
           v-model="selectedNiveau"
-          class="select select-bordered w-full max-w-xs px-4 py-2 border rounded-lg"
+          class="select select-bordered w-full max-w-xs bg-surface border-outline text-foreground px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
         >
           <option value="">Tous les niveaux</option>
           <option v-for="niveau in niveaux" :key="niveau" :value="niveau">
@@ -17,7 +17,7 @@
 
         <select
           v-model="selectedType"
-          class="select select-bordered w-full max-w-xs px-4 py-2 border rounded-lg"
+          class="select select-bordered w-full max-w-xs bg-surface border-outline text-foreground px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
         >
           <option value="">Tous les types</option>
           <option
@@ -31,7 +31,7 @@
 
         <select
           v-model="selectedDate"
-          class="select select-bordered w-full max-w-xs px-4 py-2 border rounded-lg"
+          class="select select-bordered w-full max-w-xs bg-surface border-outline text-foreground px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
         >
           <option value="">Tous les jours</option>
           <option v-for="date in joursDeDanses" :key="date" :value="date">
@@ -40,92 +40,96 @@
         </select>
       </div>
 
-      <div class="overflow-x-auto">
+      <div
+        class="overflow-x-auto rounded-xl border border-outline shadow-md"
+      >
         <table
           v-if="cours"
-          class="w-full bg-white shadow-md rounded-lg overflow-hidden"
+          class="w-full bg-surface"
         >
-          <thead class="bg-gray-100">
+          <thead class="bg-surface-muted">
             <tr>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/10"
+                class="px-4 py-3 text-left text-xs font-medium text-foreground-subtle uppercase tracking-wider w-1/10"
               >
                 Date
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/10"
+                class="px-4 py-3 text-left text-xs font-medium text-foreground-subtle uppercase tracking-wider w-1/10"
               >
                 Type
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/10"
+                class="px-4 py-3 text-left text-xs font-medium text-foreground-subtle uppercase tracking-wider w-1/10"
               >
                 Niveau
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/5"
+                class="px-4 py-3 text-left text-xs font-medium text-foreground-subtle uppercase tracking-wider w-1/5"
               >
                 Danses Apprises
               </th>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2"
+                class="px-4 py-3 text-left text-xs font-medium text-foreground-subtle uppercase tracking-wider w-1/2"
               >
                 Danses Révisées
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200">
+          <tbody class="divide-y divide-outline-subtle">
             <tr
-              v-for="cours in filteredCours"
-              :key="cours.id"
-              class="hover:bg-gray-50 transition-colors"
+              v-for="seance in filteredCours"
+              :key="seance.id"
+              class="hover:bg-background transition-colors"
             >
-              <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
-                {{ cours.date }}
+              <td class="px-4 py-4 whitespace-nowrap text-sm text-foreground-subtle">
+                {{ seance.date }}
               </td>
               <td class="px-4 py-4 whitespace-nowrap">
-                <span class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {{ cours.type }}
+                <span class="px-4 py-4 whitespace-nowrap text-sm text-foreground-subtle">
+                  {{ seance.type }}
                 </span>
               </td>
               <td class="px-4 py-4 whitespace-nowrap">
                 <span
-                  :class="`bg-${typeDeDanseParCouleur[cours.niveau]}-100 text-${
-                    typeDeDanseParCouleur[cours.niveau]
+                  :class="`bg-${typeDeDanseParCouleur[seance.niveau]}-100 text-${
+                    typeDeDanseParCouleur[seance.niveau]
                   }-800`"
                   class="px-2 py-1 rounded-full text-xs font-medium"
                 >
-                  {{ cours.niveau }}
+                  {{ seance.niveau }}
                 </span>
               </td>
               <td class="px-4 py-4">
                 <ul class="space-y-1">
                   <li
-                    v-for="danse in cours.dansesApprises"
+                    v-for="danse in seance.dansesApprises"
                     :key="danse.id"
-                    class="text-gray-700"
+                    class="text-foreground-muted"
                   >
                     <NuxtLink
                       :to="`danses/${danse.id}`"
-                      class="hover:text-blue-600 hover:underline"
+                      class="hover:text-primary hover:underline"
                     >
                       {{ danse.nom }}
                     </NuxtLink>
                   </li>
                 </ul>
               </td>
-              <td class="px-4 py-4 text-gray-700">
+              <td class="px-4 py-4 text-foreground-muted">
                 <span
-                  v-for="(danse, index) in cours.dansesRevisees"
+                  v-for="(danse, index) in seance.dansesRevisees"
                   :key="danse.id"
                 >
                   <NuxtLink
                     :to="`danses/${danse.id}`"
-                    class="hover:text-blue-600 hover:underline"
+                    class="hover:text-primary hover:underline"
                   >
                     {{ danse.nom }}
                   </NuxtLink>
-                  <span v-if="index < cours.dansesRevisees.length - 1">, </span>
+                  <span v-if="index < seance.dansesRevisees.length - 1"
+                    >,</span
+                  >
                 </span>
               </td>
             </tr>

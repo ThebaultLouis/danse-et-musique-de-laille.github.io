@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">
+    <h1 class="text-4xl font-bold text-center mb-12 text-foreground">
       Nos Danses
     </h1>
     <div v-if="danses">
@@ -10,49 +10,51 @@
           v-model="searchQuery"
           type="text"
           placeholder="Rechercher une danse..."
-          class="input input-bordered w-full max-w-md px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          class="input input-bordered w-full max-w-md bg-surface border-outline text-foreground px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+        >
       </div>
 
       <!-- Tableau des danses -->
-      <div class="overflow-x-auto flex justify-center">
-        <table
-          class="w-full max-w-lg bg-white shadow-md rounded-lg overflow-hidden"
+      <div class="overflow-x-auto">
+        <div
+          class="max-w-lg mx-auto overflow-hidden rounded-xl border border-outline shadow-md"
         >
-          <thead class="bg-gray-100">
+          <table class="w-full bg-surface">
+          <thead class="bg-surface-muted">
             <tr>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                class="px-4 py-3 text-left text-xs font-medium text-foreground-subtle uppercase tracking-wider"
               >
                 Nom
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-gray-200">
+          <tbody class="divide-y divide-outline-subtle">
             <tr
               v-for="danse in filteredDanses"
               :key="danse.id"
-              class="hover:bg-gray-50 transition-colors"
+              class="hover:bg-background transition-colors"
             >
               <td
-                class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                class="px-4 py-4 whitespace-nowrap text-sm font-medium text-foreground"
               >
                 <NuxtLink
                   :to="`danses/${danse.id}`"
-                  class="hover:text-blue-600 hover:underline"
+                  class="hover:text-primary hover:underline"
                 >
                   {{ danse.nom }}
                 </NuxtLink>
               </td>
             </tr>
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
 
       <!-- Message si aucune danse -->
       <div
         v-if="filteredDanses.length === 0"
-        class="text-center text-gray-500 py-12"
+        class="text-center text-foreground-subtle py-12"
       >
         Aucune danse ne correspond à votre recherche.
       </div>

@@ -2,7 +2,7 @@
   <div v-if="danse" class="flex justify-center py-12 px-4">
     <div class="w-full max-w-2xl text-center">
       <!-- Title -->
-      <h1 class="text-4xl font-bold text-gray-800 mb-8">
+      <h1 class="text-4xl font-bold text-foreground mb-8">
         {{ danse.nom }}
       </h1>
 
@@ -17,12 +17,14 @@
               :href="danse.musiqueUrl"
               target="_blank"
               rel="noopener noreferrer"
-              class="block bg-gray-100 rounded-xl p-6 hover:bg-gray-200 transition text-blue-600"
+              class="block bg-surface border border-outline rounded-xl p-6 text-primary hover:bg-surface-muted hover:text-primary-dark shadow-sm transition"
             >
               <Icon name="mdi:music" class="mr-2" />
               Écouter la musique
             </a>
-            <p v-else class="block p-6 text-gray-400">Musique non disponible</p>
+            <p v-else class="block p-6 text-foreground-faint">
+              Musique non disponible
+            </p>
           </div>
         </section>
 
@@ -35,28 +37,30 @@
               v-if="danse?.videoUrl"
               :href="danse.videoUrl"
               target="_blank"
-              class="block bg-gray-100 rounded-xl p-6 hover:bg-gray-200 transition"
+              class="block bg-surface border border-outline rounded-xl p-6 text-primary hover:bg-surface-muted hover:text-primary-dark shadow-sm transition"
             >
               <div class="flex items-center justify-center">
                 <Icon name="mdi:video" class="mr-2" />
                 Vidéo de chorégraphie
               </div>
             </a>
-            <p v-else class="block p-6 text-gray-400">Vidéo non disponible</p>
+            <p v-else class="block p-6 text-foreground-faint">
+              Vidéo non disponible
+            </p>
 
             <!-- PDF -->
             <a
               v-if="danse?.pdfUrl"
               :href="danse.pdfUrl"
               target="_blank"
-              class="block bg-gray-100 rounded-xl p-6 hover:bg-gray-200 transition"
+              class="block bg-surface border border-outline rounded-xl p-6 text-primary hover:bg-surface-muted hover:text-primary-dark shadow-sm transition"
             >
               <div class="flex items-center justify-center">
                 <Icon name="mdi:file-pdf-box" class="mr-2" />
                 PDF de chorégraphie
               </div>
             </a>
-            <p v-else class="block p-6 text-gray-400">PDF non disponible</p>
+            <p v-else class="block p-6 text-foreground-faint">PDF non disponible</p>
           </div>
         </section>
       </div>

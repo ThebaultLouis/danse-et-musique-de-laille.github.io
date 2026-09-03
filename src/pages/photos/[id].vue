@@ -2,13 +2,13 @@
   <div class="p-6 max-w-7xl mx-auto">
     <NuxtLink
       to="/photos"
-      class="text-blue-500 hover:underline mb-4 inline-block"
+      class="font-medium text-primary hover:text-primary-dark hover:underline mb-4 inline-block"
     >
       Retour aux photos
     </NuxtLink>
 
     <h1 class="text-2xl font-bold mb-2">{{ album.name }}</h1>
-    <p class="text-gray-500 mb-6">{{ album.date }}</p>
+    <p class="text-foreground-subtle mb-6">{{ album.date }}</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       <div
@@ -18,12 +18,12 @@
       >
         <div
           v-if="photo.endsWith('.pdf')"
-          class="flex flex-col items-center justify-center bg-gray-100 border rounded p-4 text-center w-full h-full"
+          class="flex flex-col items-center justify-center bg-surface border border-outline rounded-xl p-4 text-center w-full h-full"
         >
           <a
             :href="photo"
             target="_blank"
-            class="mt-2 text-blue-600 text-sm underline hover:text-blue-800"
+            class="mt-2 text-primary text-sm underline hover:text-primary-dark"
           >
             Open PDF
           </a>
@@ -35,7 +35,7 @@
           loading="lazy"
           class="rounded shadow object-cover w-full h-full cursor-pointer hover:scale-105 transition"
           @click="openFullscreen(index)"
-        />
+        >
       </div>
     </div>
 
@@ -48,10 +48,10 @@
       <img
         :src="fullscreenPhoto"
         class="max-w-full max-h-full object-contain rounded"
-      />
+      >
       <button
+        class="absolute top-4 left-4 bg-background text-foreground hover:bg-surface-muted px-3 py-1 rounded-lg shadow transition-colors"
         @click.stop="closeFullscreen"
-        class="absolute top-4 left-4 bg-white text-black px-3 py-1 rounded shadow"
       >
         Fermer
       </button>
