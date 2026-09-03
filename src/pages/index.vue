@@ -35,37 +35,39 @@
     <!-- Cours Section -->
     <section id="cours" class="py-16 px-4 max-w-6xl mx-auto">
       <h2 class="text-3xl font-bold text-center mb-4">Nos Cours</h2>
-      <p class="text-center mb-4">
-        Les cours de country se déroulent à la salle du point 21, 39 rue de la
-        Halte, 35890 Laillé
-      </p>
       <div
         v-for="jour in new Set(detailsDesCoursCountry.map((c) => c.jour))"
         :key="jour"
         class="py-4"
       >
         <p class="text-center mb-4 text-2xl">{{ jour }}</p>
+        <p class="text-center mb-4 text-gray-600">
+          {{ lieux.find((l) => l.jour === jour)?.lieu }}
+        </p>
         <div class="grid lg:grid-cols-3 gap-6">
           <div
             v-for="details in detailsDesCoursCountry.filter(
               (c) => c.jour == jour
             )"
-            :key="details.niveau"
+            :key="`${details.type}-${details.horaire}`"
             class="bg-gray-100 p-6 rounded-lg shadow-md space-y-3"
           >
             <div>
               <h3 class="text-2xl font-semibold text-gray-800">
                 {{ details.type }}
               </h3>
-              <h4 class="text-lg text-gray-600">
+              <h4 v-if="details.niveau" class="text-lg text-gray-600">
                 Niveau : {{ details.niveau }}
               </h4>
+              <p v-if="details.frequence" class="text-lg text-gray-600">
+                {{ details.frequence }}
+              </p>
             </div>
 
             <!-- Schedule + animateur -->
             <div class="text-sm text-gray-500 space-y-1">
               <p>{{ details.horaire }}</p>
-              <p>
+              <p v-if="details.animateur">
                 Animé par
                 <span class="font-medium text-gray-700">{{
                   details.animateur
@@ -74,7 +76,10 @@
             </div>
 
             <!-- Description -->
-            <p class="text-base text-gray-700 leading-relaxed">
+            <p
+              v-if="details.description"
+              class="text-base text-gray-700 leading-relaxed"
+            >
               {{ details.description }}
             </p>
           </div>
@@ -102,7 +107,7 @@
         ou imprimer le et donner le directement à votre prochain cours
       </p>
       <a
-        href="/fichiers/inscriptions/2025-2026.pdf"
+        href="/fichiers/inscriptions/2026-2027.pdf"
         target="_blank"
         class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition"
       >
@@ -161,7 +166,28 @@
       <!-- Animateurs -->
       <div class="space-y-2 text-center">
         <h3 class="text-2xl font-semibold text-gray-700">Animateurs DML</h3>
-        <p class="text-gray-600">Valerie & Chouchou</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-8 pt-4">
+          <figure class="flex flex-col items-center gap-3">
+            <img
+              src="/fichiers/images/animateur-valerie.jpg"
+              alt="Valérie, animatrice DML"
+              class="w-40 h-40 rounded-full object-cover shadow-md"
+            >
+            <figcaption class="text-lg font-medium text-gray-700">
+              Valérie
+            </figcaption>
+          </figure>
+          <figure class="flex flex-col items-center gap-3">
+            <img
+              src="/fichiers/images/animateur-chouchou.jpg"
+              alt="Chouchou, animateur DML"
+              class="w-40 h-40 rounded-full object-cover shadow-md"
+            >
+            <figcaption class="text-lg font-medium text-gray-700">
+              Chouchou
+            </figcaption>
+          </figure>
+        </div>
       </div>
 
       <!-- La danse -->
@@ -221,23 +247,39 @@ useHead({
   ],
 });
 
-const detailsDesCoursCountry = [
+const lieux = [
   {
-    type: "Country",
-    niveau: "Débutants",
-    description:
-      "Ce cours s'adresse aux personnes qui veulent découvrir la danse Country. Les danses sont simples pour acquérir les bases des pas. Si vous découvrez tout juste la Country, ou n'en avez jamais fait, alors il est fait pour vous.",
     jour: "Mercredi",
-    horaire: "18h15 - 19h10",
-    animateur: "Valérie",
+    lieu: "Salle de L’Archipel, rue du commandant Cousteau, 35890 Laillé",
   },
   {
+    jour: "Jeudi",
+    lieu: "Salle du point 21, 21 rue du Point du jour, 35890 Laillé",
+  },
+  {
+    jour: "Vendredi",
+    lieu: "Salle des Boulais, 35890 Laillé",
+  },
+];
+
+interface DetailsCours {
+  type: string;
+  niveau?: string;
+  frequence?: string;
+  description?: string;
+  jour: string;
+  horaire: string;
+  animateur?: string;
+}
+
+const detailsDesCoursCountry: DetailsCours[] = [
+  {
     type: "Country",
-    niveau: "Novice",
+    niveau: "Débutant + Novice",
     description:
-      "Ce cours s’adresse aux personnes qui veulent découvrir de nouvelles chorégraphies tout en travaillant avec des techniques et des rythmes encore plus variés.",
+      "Ce cours s’adresse aux personnes qui veulent découvrir la danse Country et de nouvelles chorégraphies.",
     jour: "Mercredi",
-    horaire: "19h15 - 20h30",
+    horaire: "18h30 - 20h00",
     animateur: "Valérie",
   },
   {
@@ -246,16 +288,16 @@ const detailsDesCoursCountry = [
     description:
       "Ce cours s’adresse aux personnes qui souhaitent acquérir des chorégraphiques techniques sur des rythmes plus difficiles.",
     jour: "Mercredi",
-    horaire: "Mercredi 20h40 – 22h00",
+    horaire: "20h30 – 22h00",
     animateur: "Valérie",
   },
   {
     type: "Country",
-    niveau: "Ultra débutant",
+    niveau: "Débutant",
     description:
       "Ce cours s'adresse aux personnes qui veulent découvrir la danse Country. Les danses sont simples pour acquérir les bases des pas. Si vous découvrez tout juste la Country, ou n'en avez jamais fait, alors il est fait pour vous.",
     jour: "Jeudi",
-    horaire: "18h15 - 19h10",
+    horaire: "18h30 - 19h30",
     animateur: "Valérie",
   },
   {
@@ -264,17 +306,36 @@ const detailsDesCoursCountry = [
     description:
       "Ce cours s'adresse aux personnes qui veulent découvrir la danse Catalan. Les danses sont simples pour acquérir les bases des pas. Si vous découvrez tout juste la country, ou n'en avez jamais fait, alors il est fait pour vous.",
     jour: "Jeudi",
-    horaire: "19h30 - 20h20",
+    horaire: "19h45 - 20h45",
     animateur: "Chouchou",
   },
   {
     type: "Catalan",
-    niveau: "Novice - Intermédiaire",
+    niveau: "Novice + Intermédiaire",
     description:
       "Ce cours s’adresse aux personnes qui veulent découvrir de nouvelles chorégraphies tout en travaillant avec des techniques et des rythmes encore plus variés.",
     jour: "Jeudi",
-    horaire: "20h30 - 22h00",
+    horaire: "20h50 - 22h00",
     animateur: "Chouchou",
+  },
+  {
+    type: "Cours Vintage",
+    niveau: "Tous niveaux",
+    frequence: "1er vendredi, semaine impaire",
+    description: "Apprendre des danses qui ont plus de 5 ans.",
+    jour: "Vendredi",
+    horaire: "18h30 - 22h00",
+    animateur: "Valérie et Chouchou",
+  },
+  {
+    type: "Soirée conviviale",
+    niveau: "Tous niveaux",
+    frequence: "2ème vendredi, semaine impaire",
+    description:
+      "Ouverte à tous les adhérents et invités, avec une playlist faite par les adhérents.",
+    jour: "Vendredi",
+    horaire: "18h30 - 24h00",
+    animateur: "Valérie et Chouchou",
   },
 ];
 </script>
